@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./modal.css"
-import { RegionState } from '../../model/rpc'
+import { RegionState } from '../../model/types'
 import { searchStore } from '../Main/FoodDetailSearch'
 import { useAppDispatch } from '../../Store/hooks/hooks'
 import { changeKeyword } from '../../Store/reducer/mapInfoSlice'

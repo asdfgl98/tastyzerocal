@@ -1,5 +1,5 @@
 import { dbAxios } from "../model/axios"
-import { ReviewData } from "../model/rpc"
+import { ReviewData } from "../model/types"
 
 /** review 카테고리 선택 함수 */
 export const clickCategory = (e:any ,item: string, reviewCategory:string[], setReviewCategory: any)=>{

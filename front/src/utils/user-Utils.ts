@@ -2,7 +2,8 @@ import { resetToken } from "../Store/reducer/accessTokenSlice"
 import { logOut } from "../Store/reducer/userDataSlice"
 import { updateState } from "../components/MyPage/UserEdit"
 import { dbAxios } from "../model/axios"
-import { UserState, inputRegexs } from "../model/rpc"
+import { inputRegexs } from "../model/const"
+import { UserState } from "../model/types"
 
 /** 유저 정보 객체 공백 유무 확인 및 변동사항 확인 함수 */
 const checkObject = (userData:any)=>{

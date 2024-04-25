@@ -3,10 +3,11 @@ import "./User.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faKey, faLocationDot, faUser } from '@fortawesome/free-solid-svg-icons'
 import  { useDaumPostcodePopup } from 'react-daum-postcode'
-import { UserData, inputRegexs } from '../../model/rpc'
+import { UserData } from '../../model/types'
 import { dbAxios } from '../../model/axios'
 import { useAppDispatch } from '../../Store/hooks/hooks'
 import { setToken } from '../../Store/reducer/accessTokenSlice'
+import { inputRegexs } from '../../model/const'
 
 interface OwnProp {
   setUserPage(data: boolean): void

@@ -15,7 +15,7 @@
     margin-bottom: 30px;
     border: 1px solid gray;
     border-radius: 10px;
-    width: 70%;
+    width: 1500px;
     /* height: 100vh; */
 }
 
@@ -51,4 +51,5 @@
 
 .review-page-create-btn {
     width: 200px;
+    margin-left: 90px;
 }

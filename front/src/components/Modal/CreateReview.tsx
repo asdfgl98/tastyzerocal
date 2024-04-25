@@ -9,7 +9,7 @@ import KakaoMap from '../Map/KakaoMap';
 import ReactQuill from 'react-quill';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 import { clickCategory, clickTag, createReview } from '../../utils/reviewModal-Utils';
-import { MapInfoState, ReviewData } from '../../model/rpc';
+import { MapInfoState, ReviewData } from '../../model/types';
 import { dbAxios } from '../../model/axios';
 
 interface OwnProp {
@@ -20,7 +20,7 @@ interface OwnProp {
 
 
 const foodType = ["한식", "양식", "일식", "중식", "분식", "디저트", "패스트 푸드", "면류", "튀김류","고기", "찜/탕/찌개", "햄버거", "치킨"]
-const foodTag = ["매운", "달콤한", "시원한", "따듯한", "얼큰한", "새콤한", "고소한", "맛집", "기념일", "오마카세", "상견례", "데이터", "소개팅", "가족식사", "부모님", "회식", "술안주", "해장", "이자카야", "혼밥", "분위기 좋은"]
+const foodTag = ["매운", "달콤한", "시원한", "따듯한", "얼큰한", "새콤한", "고소한", "맛집", "기념일", "오마카세", "상견례", "데이트", "소개팅", "가족식사", "부모님", "회식", "술안주", "해장", "이자카야", "혼밥", "분위기 좋은"]
 
 const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
     const [clickDetailTap, setClickDetailTap] = useState<string>("")
@@ -98,7 +98,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         store: storeData,
         category: reviewCategory,
         tag : reviewTag,
-        content: content!,
+        content: content!.replaceAll(/<img[^>]*>/g, ''),
         image: imageUrl
       }
       if(reviewData.title !== "" &&

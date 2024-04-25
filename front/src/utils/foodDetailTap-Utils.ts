@@ -1,6 +1,6 @@
 import { setUserData } from "../Store/reducer/userDataSlice"
 import { dbAxios } from "../model/axios"
-import { FavoriteList } from "../model/rpc"
+import { FavoriteList } from "../model/types"
 import { tokenErrorHandling } from "./JWT-Utils"
 
 /** 즐겨찾기 추가 */    

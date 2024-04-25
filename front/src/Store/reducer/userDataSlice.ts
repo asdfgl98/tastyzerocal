@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { FavoriteList, UserState } from "../../model/rpc"
+import { FavoriteList, UserState } from "../../model/types"
 
 
 

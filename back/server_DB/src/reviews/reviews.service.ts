@@ -29,4 +29,14 @@ export class ReviewsService {
         }
         return result
     }
+
+    async deleteAllReview(){
+        const result = await this.ReviewModel.deleteMany()
+        return "모든 리뷰 삭제"
+    }
+
+    async getReviewDataWithId(id: string){
+        const result = await this.ReviewModel.findById(id)
+        console.log(result)
+    }
 }

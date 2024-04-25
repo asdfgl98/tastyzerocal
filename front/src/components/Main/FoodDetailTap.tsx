@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks'
-import { FavoriteList, MapInfoState } from '../../model/rpc'
+import { FavoriteList, MapInfoState } from '../../model/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { dbAxios } from '../../model/axios'
 import { faHeart as faHeartSolid} from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
-import { setMapInfo } from '../../Store/reducer/mapInfoSlice'
-import { setUserData } from '../../Store/reducer/userDataSlice'
 import { kakaoCategorySearch } from '../../utils/kakao-Utils'
 import { addFavorite, checkFavorite, deleteFavorite } from '../../utils/foodDetailTap-Utils'
 

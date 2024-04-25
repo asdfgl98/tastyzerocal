@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import LocationChoice from './LocationChoice'
-import {RegionState} from '../../model/rpc'
+import {RegionState} from '../../model/types'
 import FoodList from './FoodList';
 import "./MainPage.css"
 import { dbAxios } from '../../model/axios';

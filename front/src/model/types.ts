@@ -1,14 +1,3 @@
- // 정규식 모음 객체
- export const inputRegexs = {
-  // 아이디 : 문자로 시작하여, 영문자, 숫자, 하이픈(-), 언더바(_)를 사용하여 5~20자 이내
-  id: /^[a-zA-Z][a-zA-Z0-9_-]{4,19}$/,
-  // 비밀번호 : 8~16자 이상, 최소한 하나의 대문자 또는 특수문자,하나의 소문자, 하나의 숫자, 포함, 공백 허용하지 않음
-  pw: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z@#$%^&+=!])(?!.*\s).{8,16}$/,
-  // 이름 : 영어 대/소문자, 숫자, 한글 자모음 조합, 2~10자 이내
-  name: /^[가-힣]{2,10}$/,
-  email: /^[a-zA-Z0-9]*@[a-z]*\.[a-z]{2,3}/
-};
-
 /* 위도 경도 타입 */
 export interface LatLng {
     lat: number;
@@ -71,7 +60,7 @@ export interface UserState {
     favoriteList: FavoriteList[]
 }
 
-/** 리뷰 데이터 타입 */
+/** 리뷰 데이터 Create 타입 */
 export interface ReviewData {
     title: string
     store: MapInfoState
@@ -80,3 +69,19 @@ export interface ReviewData {
     content: string
     image: string
   }
+
+/** 리뷰 데이터 불러오기 타입 */
+export interface AllReviewData extends ReviewData {
+    _id: string
+    title: string
+    store: MapInfoState
+    category: string[]
+    tag : string[]
+    content: string
+    image: string
+    createBy: {
+        id: string,
+        name: string
+    }
+    createdAt: string
+}

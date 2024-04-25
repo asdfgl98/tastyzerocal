@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { LatLng, MapInfoState } from "../../model/rpc";
+import { LatLng, MapInfoState } from "../../model/types";
 
 export interface RootState {
     mapInfo: MapInfoState[]

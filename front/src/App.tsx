@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/Layout/Header';
 import MainPage from './components/Main/MainPage';
-import Footer from './components/Layout/Footer';
 import { Route, Routes } from 'react-router-dom';
 import User from './components/User/User';
 import MyPage from './components/MyPage/MyPage';
 import { getAccessTokenWithRefreshToken, getUserDataWithToken } from './utils/JWT-Utils';
 import { useAppDispatch, useAppSelector } from './Store/hooks/hooks';
 import ReviewPage from './components/ReviewPage/ReviewPage';
-import { kakaoCategorySearch } from './utils/kakao-Utils';
+import ReviewDetail from './components/ReviewPage/ReviewDetail';
 
 
 const App:React.FC = ()=> {
@@ -41,6 +40,7 @@ const App:React.FC = ()=> {
         <Route path="/user" element={<User/>}></Route>
         <Route path="/mypage" element={<MyPage/>}></Route>
         <Route path="/review" element={<ReviewPage/>}></Route>
+        <Route path="/reviewDetail/:_id" element={<ReviewDetail/>}></Route>
       </Routes>
       
     </div>

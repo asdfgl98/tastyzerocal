@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { BearerTokenGuard } from 'src/guard/bearer-token.guard';
 import { CreateReviewDTO } from './dto/create-review.dto';
@@ -9,8 +9,18 @@ export class ReviewsController {
 
   /**모든 리뷰 조회 */
   @Get()
-  async getRiviewData(){
+  async getReviewData(){
     return await this.reviewsService.getReviewData()
+  }
+
+  @Delete()
+  async deleteAllReview(){
+    return await this.reviewsService.deleteAllReview()
+  }
+
+  @Get()
+  async getReviewDataWithId(@Param() id: string){
+    await this.reviewsService.getReviewDataWithId(id)
   }
 
   

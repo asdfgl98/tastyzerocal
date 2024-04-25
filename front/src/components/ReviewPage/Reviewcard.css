@@ -1,4 +1,35 @@
 .card-style {
     margin-top: 10px;
     margin-bottom: 10px;
+    
+}
+
+.card-img {
+    max-height: 200px;
+}
+
+
+.like-view-box {   
+    display: flex;
+    position: relative;
+    margin-top: 50px;
+}
+
+.like-box {
+    position: absolute;
+    bottom: 0px;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    text-align: end;
+}
+
+.count-span {
+    margin-left: 3px;
+    margin-right: 3px;
 }

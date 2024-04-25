@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {  UserState, inputRegexs } from '../../model/rpc'
+import {  UserState } from '../../model/types'
 import "./UserEdit.css"
 import { useDaumPostcodePopup } from 'react-daum-postcode'
 import { inputValidation, userDelete, userUpdate } from '../../utils/user-Utils'

@@ -6,11 +6,6 @@ import { MapInfoState } from "src/Types/type";
 @Schema()
 export class Review {
     @Prop({
-        default: new Types.ObjectId
-    })
-    _id: Types.ObjectId
-
-    @Prop({
         required: true
     })
     title: string

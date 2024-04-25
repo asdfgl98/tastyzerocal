@@ -1,0 +1,64 @@
+.location-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: hsl(240, 100%, 50%); */
+    /* background-color: #F8F9FA; */
+    height: 20vh;
+    overflow: hidden;
+    margin-top: 50px;
+    margin-bottom: 25px;
+
+}
+
+.location-text {
+    text-align: center;
+}
+
+.location-button {
+    background-color: #04AA6D; /* Green */
+    border: 0.1rem solid black;
+    color: white;
+    padding: 0.7rem 0.9rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    width: 14em;
+    height: 3.2em;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.05rem;
+    box-shadow: 3px 3px 3px black;
+
+}
+
+@media screen and (max-width: 844px){
+    .location-button {
+        color: white;
+        padding: 0;
+        font-size: 0.9rem;
+        width: 12em;
+        height: 3.2em;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.05rem;
+        box-shadow: 3px 3px 3px black;
+        overflow: hidden; 
+    }
+}
+
+
+.regionName {
+    margin: 0 10px 0 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #E0475B
+}
+
+.headline1 {
+    font-weight: bold;
+    font-size: 2rem;
+}

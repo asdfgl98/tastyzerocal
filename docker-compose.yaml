@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  frontclient:
+    container_name: frontclient
+    # image: dockerjihun/front-app:1
+    build:
+      context: ./front
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    depends_on:
+      - apiserver
+      - dbserver
+  apiserver:
+    container_name: apiserver
+    # image: dockerjihun/api-server
+    build:
+      context: ./back/server
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3001:3001"
+    env_file:
+    #   - ./back/server/config/.env.prod
+      - ./docker-config/apiserver-config/.env.prod
+  dbserver:
+    container_name: dbserver
+    # image: dockerjihun/db-server
+    build:
+      context: ./back/server_DB
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3002:3002"
+    env_file:
+    #   - ./back/server_DB/config/.env.prod
+      - ./docker-config/dbserver-config/.env.prod

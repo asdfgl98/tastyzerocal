@@ -1,0 +1,33 @@
+.footer-box {
+    height: 100px;
+    position: relative;
+    background-color: black;
+    transform : translateY(0%);
+    /* bottom: 0; */
+    
+    
+}
+
+.header {
+    height: 80px;
+    background-color: white;
+}
+
+.navBar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid gray;
+}
+
+.header-main {
+    color: black;
+    font-size: 1.5rem;
+}
+
+.header-link {
+    font-size: 1.2rem;
+    color: black;
+    margin: 10px;
+}

@@ -1,0 +1,56 @@
+
+.review-create-container {
+    width: 100%;
+    /* height: 100vh; */
+    /* background-color: black; */
+    /* overflow: auto; */
+    display: inline-block;
+}
+
+
+.review-create-map {
+    display: flex;
+    height: 50vh;
+}
+
+.review-create-tag {
+    margin-top: 100px;
+    margin-left: 20px;
+    /* background-color: black; */
+    /* padding: 10px; */
+    height: 200px;
+}
+
+.food-type {
+    margin: 20px 10px;
+}
+
+.food-type-btn {
+    min-width: 100px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.click-btn {
+    background-color: #E0475B;
+    border: #E0475B;
+    color: white;
+}
+
+.review-create-btn-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 70px;
+
+}
+
+.review-create-btn-box > button {
+    background-color: #E0475B;
+    border: #E0475B;
+    min-width: 100px;
+    margin-left: 20px;
+    font-weight: bold;
+
+}

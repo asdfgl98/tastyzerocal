@@ -1,0 +1,134 @@
+.food-detail-container{
+    height: 100%;
+    width: 25%;
+    border-radius: 10px;
+    
+}
+
+@media screen and (max-width: 844px){
+    .food-detail-container{
+        height: 100vh;
+        width: 100%;
+    }
+}
+
+.food-detail-search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 15vh;
+    background-color: #E0475B;
+    border-radius: 10px 0px 0px 0px;
+}
+
+.search-container{
+    display: flex;
+    width: 85%;
+    height: 40%;
+    border-radius: 15px;
+    background-color: white;
+    padding: 5px;
+    box-shadow: 3px 3px 5px black;  
+      
+}
+
+.input-style {
+    width: 90%;
+    outline: none;
+    border: 0;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.search-click {
+    width: 10%;
+    height: 100%;
+    cursor: pointer;
+    color: gray;
+}
+
+.food-detail-tap {
+    background-color: black;
+    width: 100%;
+    height: 85%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    
+    
+}
+
+.food-detail-list {
+    background-color: white;
+    width: 100%;
+    height: 81.2%;
+    /* display: flex; */
+    /* flex-direction: column; */
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 0px 0px 0px 10px;
+}
+
+.food-detail-list::-webkit-scrollbar {
+    /* background-color: gray; */
+    width: 10px;
+}
+.food-detail-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #95afc0;
+    height: 15px;
+}
+
+.food-detail-list::-webkit-scrollbar-track {
+    background: rgba(220, 20, 60, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
+
+
+.food-detail-card{
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    width: 90%;
+    /* height: 17vh; */
+    /* background-color: yellow; */
+    border: 2px solid rgb(36, 95, 198);
+    border-radius: 10px;
+    padding: 0.5rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+}
+
+.store-name {
+    font-size: 0.9rem;
+    color: black;
+    font-weight: bold;
+}
+
+.store-cate{
+    margin-left: 5px;
+    display: inline-block;
+    width:150px;
+    font-size: 0.65rem;
+    color: gray;
+}
+
+.food-detail-card > p {
+    margin: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.active-box {
+    border: 3px solid #E0475B;
+}
+
+.icon-favorite {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+

@@ -1,0 +1,36 @@
+.food-data-container {
+    /* background-color: black; */
+    height: 80vh;
+    margin-top: 100px;
+}
+
+.food-data-tap {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    color: gray;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;    
+}
+
+.food-data-tap > div {
+    font-size: 1.2rem;
+    width: 100%;
+    margin: 15px;
+}
+
+.food-data-click {
+    color: black;
+    font-weight: bold;
+    height: 100%;
+    border-left: 1px solid black;
+    border-Right: 1px solid black;
+}
+
+.food-data-list {
+    height: 90%;
+    width: 100%;
+    background-color: aquamarine;
+}

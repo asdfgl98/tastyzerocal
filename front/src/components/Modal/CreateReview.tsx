@@ -8,7 +8,7 @@ import FoodDetail from '../Main/FoodDetail';
 import KakaoMap from '../Map/KakaoMap';
 import ReactQuill from 'react-quill';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
-import { clickCategory, clickTag, createReview } from '../../utils/reviewModal-Utils';
+import { clickCategory, clickTag, createReview } from '../../utils/review-Utils';
 import { MapInfoState, ReviewData } from '../../model/types';
 import { dbAxios } from '../../model/axios';
 

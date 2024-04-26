@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Review } from './schema/review.schema';
 import { Model } from 'mongoose';
 import { CreateReviewDTO } from './dto/create-review.dto';
+import { WriteCommentDTO } from './dto/write-comment.dto';
+import {v4 as uuid} from 'uuid'
 
 @Injectable()
 export class ReviewsService {
@@ -22,7 +24,10 @@ export class ReviewsService {
 
     /**모든 리뷰 조회 Model*/
     async getReviewData (){
-        const result = await this.ReviewModel.find().populate('createBy', "createBy name id")
+        const result = await this.ReviewModel.find({},{
+            comments: false,
+            updatedAt: false,
+        }).populate('createBy', "createBy name id")
         
         if(!result){
             throw new BadRequestException("getReviewData : Review 데이터 조회 오류")
@@ -38,5 +43,56 @@ export class ReviewsService {
     async getReviewDataWithId(id: string){
         const result = await this.ReviewModel.findById(id)
         console.log(result)
+    }
+
+    async getComments (postId: string){
+        const result = await this.ReviewModel.findById(postId,{
+            category: false,
+            content: false,
+            createBy: false,
+            createdAt: false,
+            image: false,
+            imgUrl: false,
+            store: false,
+            tag: false,
+            title: false,
+            updatedAt: false
+        })
+        return result.comments
+    }
+
+    async writeComment(commentData: WriteCommentDTO, user: any){
+        const {comments} = await this.ReviewModel.findByIdAndUpdate(
+            commentData.postId,
+            {$push: {comments: {
+                commentId: uuid(),
+                postId: commentData.postId,
+                userId: user.id,
+                userName: user.name,
+                comment: commentData.comment
+            }}},
+            {new: true}
+          )
+        return comments
+    }
+
+    async deleteComment(commentId: string, postId: string){
+        const find = await this.ReviewModel.findById(postId)
+        if(!find){
+            throw new BadRequestException("deleteComment : 존재하지 않는 리뷰입니다.")
+        }
+
+        const filterComment = find.comments.filter((item)=>item.commentId !== commentId)
+
+        const updateComments = await this.ReviewModel.findByIdAndUpdate(
+            postId,
+            {comments: filterComment},
+            {new: true}
+        )
+        if(!updateComments){
+            throw new BadRequestException("deleteComment : 댓글 삭제 중 오류가 발생했습니다." )
+        }
+
+        return updateComments.comments
     }
 }

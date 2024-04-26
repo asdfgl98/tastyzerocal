@@ -85,3 +85,14 @@ export interface AllReviewData extends ReviewData {
     }
     createdAt: string
 }
+
+export interface WriteComment {
+    postId: string
+    comment: string
+}
+
+export interface CommentData extends WriteComment{
+    commentId: string
+    userId: string
+    userName: string
+}

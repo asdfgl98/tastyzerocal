@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Types, Schema as MongooseSchema } from "mongoose";
-import { MapInfoState } from "src/Types/type";
+import { Comment } from "./comment.schema";
+import { CommentType } from "src/Types/type";
+
 
 
 @Schema()
@@ -42,13 +44,13 @@ export class Review {
     })
     createdAt: Date
 
-    @Prop()
-    imgUrl: string
-
     @Prop({
         default: Date.now
     })
     updatedAt: Date
+
+    @Prop()
+    comments: CommentType[]
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review)

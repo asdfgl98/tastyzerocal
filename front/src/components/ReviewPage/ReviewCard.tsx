@@ -23,7 +23,7 @@ const ReviewCard:React.FC<OwnProp> = ({data}) => {
   return (
     <div className='card-style' >
         <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" onClick={clickReviewCard} src={`https://${data.image}`} style={{objectFit: "cover", cursor:"pointer"}} className="card-img"/>
+        <Card.Img variant="top" onClick={()=>clickReviewCard()} src={`https://${data.image}`} style={{objectFit: "cover", cursor:"pointer"}} className="card-img"/>
         <Card.Body>        
             <Card.Title>{data.title}</Card.Title>
             <Card.Text>{data.store.place_name}</Card.Text>

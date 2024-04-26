@@ -161,7 +161,7 @@ export class UsersService {
 
     return result.favoriteList
   }
-  /** 음식점 중복 에러 방지 */
+  /** 음식점 즐겨찾기 중복 에러 방지 */
   isDuplicate (data: FavoriteDTO, user: any, ){
     const result = user.favoriteList.some((item: any)=>{
       return item.id === data.id

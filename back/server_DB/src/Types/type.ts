@@ -18,3 +18,12 @@ export interface MapInfoState {
     x: string
     y: string
 }
+
+export interface CommentType {
+    commentId: string
+    postId: string
+    userId: string
+    userName: string
+    comment: string
+}
+

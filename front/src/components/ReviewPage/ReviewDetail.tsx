@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./ReviewDetail.css"
 import { useLocation, useParams } from 'react-router-dom'
-import { AllReviewData } from '../../model/types'
+import { AllReviewData, CommentData, WriteComment } from '../../model/types'
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import ImageSlide from './ImageSlide';
@@ -10,10 +10,48 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAppSelector } from '../../Store/hooks/hooks';
+import { deleteComment, getComments, writeCommentOnReview } from '../../utils/review-Utils';
+
 
 const ReviewDetail = () => {
     const data:AllReviewData = useLocation().state
     const {_id} = useParams()
+    const userId = useAppSelector((state)=>state.userData.id)
+    const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
+    const [writeComment, setWriteComment] = useState<WriteComment>({
+        postId: _id!,
+        comment: ""
+    })
+    const [commentData, setCommentData] = useState<CommentData[]>()
+
+    useEffect(()=>{
+        if(_id){
+            getComments(_id, setCommentData)
+        }
+    },[_id])
+
+    const changeComment = (e: any)=>{
+        setWriteComment({
+            ...writeComment,
+            comment: e.target.value
+        })
+    }
+
+    const clickWrite = async()=>{
+        const comment = await writeCommentOnReview(writeComment, accessToken)
+        if(comment){
+            setCommentData(comment)
+        }
+    }
+
+    const clickDeleteComment = async(commentId: string)=>{
+        const result = await deleteComment(commentId, _id!, accessToken)
+        if(result){
+            setCommentData(result)
+        }
+    }
+
   return (
     <div className='review-detail-container'>
         <div className='review-detail-box'>
@@ -35,15 +73,15 @@ const ReviewDetail = () => {
             </div>
             <div className='review-detail-category-tag'>
                 <Stack direction="horizontal" gap={1}>
-                    {data.category.map((item)=>(
-                        <Badge bg="success">{item}</Badge>
+                    {data.category.map((item, idx)=>(
+                        <Badge bg="success" key={idx}>{item}</Badge>
                     ))}
                 </Stack>
             </div>
             <div className='review-detail-category-tag'>
                 <Stack direction="horizontal" gap={1}>
-                    {data.tag.map((item)=>(
-                        <Badge bg="warning">#{item}</Badge>
+                    {data.tag.map((item, idx)=>(
+                        <Badge bg="warning" key={idx}>#{item}</Badge>
                     ))}
                 </Stack>
             </div>
@@ -62,21 +100,20 @@ const ReviewDetail = () => {
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>리뷰에 대한 댓글을 남겨보세요!</Form.Label>
                             <div style={{display: "flex"}}>
-                                <Form.Control as="textarea" rows={3} />
-                                <Button style={{width: "100px", marginLeft: "15px"}}variant="success">작성하기</Button>
+                                <Form.Control as="textarea" rows={3} onChange={(e)=>changeComment(e)}/>
+                                <Button onClick={()=>clickWrite()} style={{width: "100px", marginLeft: "15px"}}variant="success">작성하기</Button>
                             </div>
                         </Form.Group>
                     </Form>
                 </div>
-                <div className='review-detial-comment'>
-                    <h6>박지훈님</h6>
-                    <span>좋은 글 감사합니다.</span>
-                    <FontAwesomeIcon icon={faTrashCan} style={{position: "absolute", right: "10px", top: "5px", cursor: "pointer"}}/>
-                </div>
-                <div className='review-detial-comment'>
-                    <h6>박지훈님</h6>
-                    <span>좋은 글 감사합니다.</span>
-                </div>
+                {commentData?.map((item)=>(
+                    <div className='review-detial-comment' key={item.commentId}>                    
+                         <h6>{item.userName}님</h6>
+                         <span>{item.comment}</span>
+                         {userId === item.userId ? <FontAwesomeIcon onClick={()=>clickDeleteComment(item.commentId)} icon={faTrashCan} style={{position: "absolute", right: "10px", top: "5px", cursor: "pointer"}}/> : null}
+                    </div>
+                ))}
+               
             </div>
         </div>
     </div>

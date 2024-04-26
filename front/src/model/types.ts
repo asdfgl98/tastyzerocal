@@ -84,6 +84,8 @@ export interface AllReviewData extends ReviewData {
         name: string
     }
     createdAt: string
+    likeCount: number,
+    viewCount: number
 }
 
 export interface WriteComment {

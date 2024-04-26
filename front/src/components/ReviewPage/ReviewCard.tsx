@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid} from '@fortawesome/free-solid-svg-icons'
 import { faEye, faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
 import { useNavigate } from 'react-router-dom';
+import { dbAxios } from '../../model/axios';
 
 interface OwnProp {
   data: AllReviewData
@@ -16,6 +17,11 @@ const ReviewCard:React.FC<OwnProp> = ({data}) => {
   const navigater = useNavigate()
   
   const clickReviewCard = ()=>{
+    try{
+      const viewCount= dbAxios.put(`/reviews/like/${data._id}`)
+    } catch(err){
+      console.error("조회수 증가 요청 에러", err)
+    }
     navigater(`/reviewDetail/${data._id}`, {state : data})
   }
 
@@ -33,9 +39,9 @@ const ReviewCard:React.FC<OwnProp> = ({data}) => {
                 <FontAwesomeIcon icon={faHeartSolid} size='xl' color='red'className='icon-like'/> :
                 <FontAwesomeIcon icon={faHeartRegular} size='xl' color='red'className='icon-like'/> 
                 }
-                <span className='count-span'>12</span>
+                <span className='count-span'>{data.likeCount}</span>
                 <FontAwesomeIcon icon={faEye} />
-                <span className='count-span'>13</span>
+                <span className='count-span'>{data.viewCount}</span>
               </div>
               <div className='card-info'>
                 <span>박지훈</span>

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { AccessTokenGuard, BearerTokenGuard } from 'src/guard/bearer-token.guard';
 import { WriteCommentDTO } from './dto/write-comment.dto';
@@ -45,6 +45,13 @@ export class ReviewsController {
     @Query('postId') postId: string
   ){
     return await this.reviewsService.deleteComment(commentId,postId)
+  }
+
+  @Put('/like/:postId')
+    viewCount(
+    @Param('postId') postId: string
+  ){ 
+     this.reviewsService.viewCount(postId)
   }
 
   

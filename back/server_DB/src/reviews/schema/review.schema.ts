@@ -51,6 +51,18 @@ export class Review {
 
     @Prop()
     comments: CommentType[]
+
+    @Prop({
+        type: Number,
+        default: 0
+    })
+    likeCount: number
+
+    @Prop({
+        type: Number,
+        default: 0
+    })
+    viewCount: number
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review)

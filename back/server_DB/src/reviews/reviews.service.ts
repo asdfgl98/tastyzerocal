@@ -95,4 +95,13 @@ export class ReviewsService {
 
         return updateComments.comments
     }
+
+    async viewCount(postId: string){
+        const result = await this.ReviewModel.findByIdAndUpdate(
+            postId,
+            {$inc: { viewCount: 1}},{new: true}
+        ).catch((err)=>{
+            throw new BadRequestException("viewCount 조회수 증가 쿼리 에러")
+        })
+    }
 }

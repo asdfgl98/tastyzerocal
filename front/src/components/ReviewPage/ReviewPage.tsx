@@ -13,12 +13,12 @@ import { AllReviewData } from '../../model/types';
 const ReviewPage = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const dispatch = useAppDispatch()
-    const [reviewData, setRevieData] = useState<AllReviewData[]>()
+    const [reviewData, setReviewData] = useState<AllReviewData[]>([])
 
     const getReivewData = async()=>{
         try{
             const response = await dbAxios.get('/reviews')
-            setRevieData(response.data)
+            setReviewData(response.data)
         } catch(err){
             alert("리뷰 작성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.")
             console.error("리뷰데이터 요청 에러 발생", err)
@@ -48,7 +48,7 @@ const ReviewPage = () => {
             </div>
             <div className='review-page-card-box'>                
                 {reviewData?.map((item, index)=>(
-                    <ReviewCard key={index} data={item}/>
+                    <ReviewCard key={index} data={item} reviewData={reviewData} setReviewData={setReviewData}/>
                 ))}
             </div>
         </div>

@@ -11,6 +11,7 @@ export const getUserDataWithToken = async(dispatch:any ,accessToken:string)=>{
           }
         })
         dispatch(setUserData(data))
+        console.log(data)
     } catch(err:any){
       tokenErrorHandling(err) 
     }

@@ -11,7 +11,6 @@ export class KakaoLoginService {
         const headers = {
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
         }
-        console.log(ENV_KAKAO_REDIRECT_URI_KEY)
         const params = {
             grant_type: "authorization_code",
             client_id: this.configService.get<string>(ENV_KAKAO_REST_API_KEY_KEY),

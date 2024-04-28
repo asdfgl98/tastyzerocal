@@ -11,7 +11,8 @@ const initialState: UserState = {
     address: "",
     loginType: "",
     addressDetail: "",
-    favoriteList: []
+    favoriteList: [],
+    likeList: []
 }
 
 export const userDataSlice = createSlice({
@@ -26,6 +27,7 @@ export const userDataSlice = createSlice({
             state.email = action.payload.email === undefined ?  "" : action.payload.email
             state.address = action.payload.address === undefined ?  "" : action.payload.address
             state.addressDetail = action.payload.addressDetail === undefined ?  "" : action.payload.addressDetail
+            state.likeList = action.payload.likeList
         },
 
         logOut:(state)=>{
@@ -35,6 +37,7 @@ export const userDataSlice = createSlice({
             state.id = ""
             state.email = ""
             state.address = ""
+            state.likeList= []
         }
     }
 })

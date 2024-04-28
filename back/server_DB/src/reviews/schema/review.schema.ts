@@ -53,10 +53,8 @@ export class Review {
     comments: CommentType[]
 
     @Prop({
-        type: Number,
-        default: 0
     })
-    likeCount: number
+    likeCount: string[]
 
     @Prop({
         type: Number,

@@ -47,11 +47,20 @@ export class ReviewsController {
     return await this.reviewsService.deleteComment(commentId,postId)
   }
 
-  @Put('/like/:postId')
+  @Put('/view/:postId')
     viewCount(
     @Param('postId') postId: string
   ){ 
      this.reviewsService.viewCount(postId)
+  }
+
+  @Put('/like/:postId')
+  @UseGuards(BearerTokenGuard)
+  async likeCount(
+    @Param('postId') postId: string,
+    @Req() req:any
+  ){
+    return await this.reviewsService.likeCount(postId, req.user.id)
   }
 
   

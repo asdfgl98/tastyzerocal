@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from 'react-bootstrap/Card';
 import "./Reviewcard.css"
 import { AllReviewData } from '../../model/types';
@@ -7,23 +7,44 @@ import { faHeart as faHeartSolid} from '@fortawesome/free-solid-svg-icons'
 import { faEye, faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
 import { useNavigate } from 'react-router-dom';
 import { dbAxios } from '../../model/axios';
+import { likeCount } from '../../utils/review-Utils';
+import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 
 interface OwnProp {
   data: AllReviewData
+  reviewData: AllReviewData[]
+  setReviewData(data: AllReviewData[]): void
 }
 
-const ReviewCard:React.FC<OwnProp> = ({data}) => {
+const ReviewCard:React.FC<OwnProp> = ({data, setReviewData}) => {
   const [checkLike, setCheckLike] = useState<boolean>(false)
   const navigater = useNavigate()
+  const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
+  const userId = useAppSelector((state)=>state.userData.id)
   
-  const clickReviewCard = ()=>{
+  const clickReviewCard = async()=>{
     try{
-      const viewCount= dbAxios.put(`/reviews/like/${data._id}`)
+      const viewCount= await dbAxios.put(`/reviews/view/${data._id}`)
     } catch(err){
       console.error("조회수 증가 요청 에러", err)
     }
     navigater(`/reviewDetail/${data._id}`, {state : data})
   }
+
+  const clickLikeIcon = async(postId: string)=>{
+    const response = await likeCount(postId, accessToken)
+    setReviewData(response)
+  }
+
+  useEffect(()=>{
+    if(data.likeCount.includes(userId)){
+      setCheckLike(true)
+    }
+    else{
+      setCheckLike(false)
+    }
+  }, [data])
+  
 
 
   return (
@@ -36,10 +57,10 @@ const ReviewCard:React.FC<OwnProp> = ({data}) => {
             <div className='like-view-box'>
               <div className='like-box'>
                 {checkLike ? 
-                <FontAwesomeIcon icon={faHeartSolid} size='xl' color='red'className='icon-like'/> :
-                <FontAwesomeIcon icon={faHeartRegular} size='xl' color='red'className='icon-like'/> 
+                <FontAwesomeIcon onClick={()=>clickLikeIcon(data._id)} icon={faHeartSolid} size='xl' color='red'className='icon-like'/> :
+                <FontAwesomeIcon onClick={()=>clickLikeIcon(data._id)} icon={faHeartRegular} size='xl' color='red'className='icon-like'/> 
                 }
-                <span className='count-span'>{data.likeCount}</span>
+                <span className='count-span'>{data.likeCount.length}</span>
                 <FontAwesomeIcon icon={faEye} />
                 <span className='count-span'>{data.viewCount}</span>
               </div>

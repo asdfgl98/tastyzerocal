@@ -58,6 +58,7 @@ export interface UserState {
     addressDetail : string
     loginType: string
     favoriteList: FavoriteList[]
+    likeList: string[]
 }
 
 /** 리뷰 데이터 Create 타입 */
@@ -84,7 +85,7 @@ export interface AllReviewData extends ReviewData {
         name: string
     }
     createdAt: string
-    likeCount: number,
+    likeCount: string[],
     viewCount: number
 }
 

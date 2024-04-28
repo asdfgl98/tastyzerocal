@@ -5,10 +5,14 @@ import { Model } from 'mongoose';
 import { CreateReviewDTO } from './dto/create-review.dto';
 import { WriteCommentDTO } from './dto/write-comment.dto';
 import {v4 as uuid} from 'uuid'
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ReviewsService {
-    constructor(@InjectModel(Review.name) private readonly ReviewModel: Model<Review>){}
+    constructor(
+        @InjectModel(Review.name) private readonly ReviewModel: Model<Review>,
+        private readonly usersService: UsersService
+    ){}
 
     /**리뷰 생성 Model */
     async createReview(createReview: CreateReviewDTO, s3ImageUrl:string, _id: string){
@@ -103,5 +107,29 @@ export class ReviewsService {
         ).catch((err)=>{
             throw new BadRequestException("viewCount 조회수 증가 쿼리 에러")
         })
+    }
+
+    async likeCount(postId: string, userId: string){
+        let find = await this.ReviewModel.findById(postId)
+        const include = find.likeCount.includes(userId)
+        this.usersService.likeList(include, userId, postId)
+        let result: any;
+        if (include){
+            result = await this.ReviewModel.findByIdAndUpdate(
+                postId,
+                {$pull: {likeCount : userId}}
+            )
+        }
+        else{
+            result = await this.ReviewModel.findByIdAndUpdate(
+                postId,
+                {$push: { likeCount: userId}}
+            )
+        }
+
+        if(!result){
+            throw new BadRequestException("likeCount : 좋아요 쿼리 에러")
+        }
+        return await this.getReviewData()
     }
 }

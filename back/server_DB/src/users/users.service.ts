@@ -190,10 +190,26 @@ export class UsersService {
 
     if(!updateFavorite){
       throw new BadRequestException("deleteFavorite : DB 즐겨찾기 제거 실패")
-    }
+    }    
+    return updateFavorite.favoriteList      
+  }
 
-    
-    return updateFavorite.favoriteList
-      
+  async likeList(include: boolean, userId: string, postId: string){
+    let result: any;
+    if(include){
+      result = await this.UserModel.findOneAndUpdate(
+        {id: userId},
+        {$pull: {likeList: postId}}
+      )
+    }
+    else{
+      result = await this.UserModel.findOneAndUpdate(
+        {id: userId},
+        {$push: {likeList: postId}}
+      )
+    }
+    if(!result){
+      throw new BadRequestException("likeList : 유저 좋아요 리스트 쿼리 에러")
+    }
   }
 }

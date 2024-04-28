@@ -10,7 +10,8 @@
 .mypage-box {
     background-color: white;
     height: 100vh;
-    width: 50%;
+    width: 950px;
+    /* width: 50%; */
 }
 
 .mypage-tap{

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ObjectId } from "mongodb";
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { FavoriteDTO } from "../dto/favorite-dto";
 import { Favorite } from "./favorite.schema";
 
@@ -31,17 +31,6 @@ export class User {
     @Prop()
     addressDetail: string
 
-    // @Prop({
-    //     default: new Date()
-    // })
-    // createdAt: Date;
-
-    // @Prop({
-    //     type: Date,
-    //     default: new Date()
-    // })
-    // updatedAt: Date;
-
     @Prop({
         default: "normal"
     })
@@ -57,6 +46,12 @@ export class User {
 
     @Prop([Favorite])
     favoriteList: FavoriteDTO[]
+
+    @Prop({
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Review',
+    })
+    likeList: mongoose.Schema.Types.ObjectId[]
 
 }
 

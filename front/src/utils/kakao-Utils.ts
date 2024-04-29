@@ -18,7 +18,7 @@ export const kakaoCategorySearch = async(latLng: {lng: number, lat: number}, dis
   /** CustomOverlay(인포윈도우) 생성 후 지도에 표시 함수 */
   export const displayInfowindow= (place: any, map: any, i: number , infowindowRef:any, dispatch: any): void=> { 
     const content = `
-      <div class="infowindow-container" data-name="${place.place_name}">
+      <div class="infowindow-container" data-name="${place.id}">
           <span class="infowindow-name">${place.place_name}</span><br/>
           <span class="infowindow-type">${place.category_name.split(' ')[place.category_name.split(' ').length-1]}</span>  
       </div>
@@ -65,7 +65,7 @@ export const kakaoCategorySearch = async(latLng: {lng: number, lat: number}, dis
         // 모든 detailTapDiv의 클래스 제거
         detailTapDiv.classList.remove('active-box');
         const div = detailTapDiv.getAttribute('data-name')
-        if(div === place.place_name){
+        if(div === place.id){
           detailTapDiv.classList.add('active-box')
           detailTapDiv.scrollIntoView({ behavior: 'smooth',  block: 'nearest', inline: 'center'});
         }

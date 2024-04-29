@@ -55,3 +55,27 @@
 .click-sort {
     font-weight: bold;
 }
+
+@media screen and (max-width: 430px){
+    .review-page-box {
+        width: 430px;
+    }
+
+    .review-page-tap {
+        display: flex;
+        justify-content: center;
+        width: 430px;
+        margin-top: 30px;
+        margin-right: 20px;
+    }
+
+    .review-page-create-btn {
+        width: 215px;
+        margin-left: 25px;
+    }
+
+    .review-page-filter {
+        width: 215px;
+        
+    }
+}

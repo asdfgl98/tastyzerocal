@@ -27,7 +27,7 @@ const FoodCard:React.FC<OwnProp> = ({item, setClickDetailTap, isMyPage}) => {
       }
 
   return (
-    <div className='food-detail-card' key={item.id} data-name={item.place_name} onClick={()=>setClickDetailTap(item.place_name)}>
+    <div className='food-detail-card' key={item.id} data-name={item.id} onClick={()=>setClickDetailTap(item.id)}>
     <span className='store-name'>{item.place_name}</span> 
     <span className="store-cate">{item.category_name.split(' ')[item.category_name.split(' ').length-1]}</span>
     {  checkFavorite(item.id, userInfo.favoriteList) ?

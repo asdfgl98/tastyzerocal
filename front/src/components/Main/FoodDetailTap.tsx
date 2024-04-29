@@ -1,11 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks'
-import { FavoriteList, MapInfoState } from '../../model/types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeartSolid} from '@fortawesome/free-solid-svg-icons'
-import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
-import { kakaoCategorySearch } from '../../utils/kakao-Utils'
-import { addFavorite, checkFavorite, deleteFavorite } from '../../utils/foodDetailTap-Utils'
+import React from 'react'
+import {  useAppSelector } from '../../Store/hooks/hooks'
+import {  MapInfoState } from '../../model/types'
+
 import FoodCard from './FoodCard'
 
 
@@ -20,7 +16,7 @@ const FoodDetailTap:React.FC<OwnProp> = ({setClickDetailTap}) => {
   return (
     <div className="food-detail-list">
         {mapInfo?.map((item: MapInfoState)=> (
-          <FoodCard item={item} setClickDetailTap={setClickDetailTap} isMyPage={false}/>
+          <FoodCard key={item.id} item={item} setClickDetailTap={setClickDetailTap} isMyPage={false}/>
         ))}
     </div>
   )

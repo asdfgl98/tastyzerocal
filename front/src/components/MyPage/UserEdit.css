@@ -40,3 +40,11 @@
     font-weight: bold;
 }
 
+@media screen and (max-width: 430px) {
+    .user-edit-box {
+        margin-top: 5rem;
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
+}

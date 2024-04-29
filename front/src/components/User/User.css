@@ -1,8 +1,8 @@
 /* Login Component */
 .user-container {
-    background-color: pink;
+    background-color: white;
     height: auto;
-    min-height: 90vh;
+    /* min-height: 90vh; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,13 +11,15 @@
 
 .user-form {
     padding-top: 2rem;
-    width: 40%;
+    /* width: 40%; */
+    width: 100%;
     height: 80vh;
     background-color: white;
     /* text-align: center; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 30px;
     
 }
 
@@ -31,10 +33,23 @@
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    width: 50%;
+    width: 450px;
     height: 100%;
     /* background-color: black; */
 }
+
+@media screen and (max-width: 430px){
+    .login-container {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        width: 350px;
+        height: 100%;
+        /* background-color: black; */
+    }
+}
+
 
 .login-container > input{
     height: 8%;

@@ -11,7 +11,6 @@ export const getUserDataWithToken = async(dispatch:any ,accessToken:string)=>{
           }
         })
         dispatch(setUserData(data))
-        console.log(data)
     } catch(err:any){
       tokenErrorHandling(err) 
     }
@@ -37,7 +36,6 @@ export const getUserDataWithToken = async(dispatch:any ,accessToken:string)=>{
 
   /** 토큰 에러 핸들링 함수 */
   export const tokenErrorHandling = (err: any)=>{
-    console.log(err)
     const error = err.response?.data.error.error
     if(error === "RefreshExpired"){
       alert("엑세스가 만료되었습니다. 다시 로그인해주세요.")

@@ -3,7 +3,7 @@ import "./ReviewPage.css"
 import ReviewCard from './ReviewCard'
 import Button from 'react-bootstrap/Button';
 import CreateReview from '../Modal/CreateReview';
-import { useAppDispatch } from '../../Store/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 import { setMapInfo } from '../../Store/reducer/mapInfoSlice';
 import { dbAxios } from '../../model/axios';
 import { AllReviewData } from '../../model/types';
@@ -12,6 +12,7 @@ import { AllReviewData } from '../../model/types';
 
 const ReviewPage = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
     const dispatch = useAppDispatch()
     const [reviewData, setReviewData] = useState<AllReviewData[]>([])
     const sortNewRef = useRef<HTMLSpanElement>(null)
@@ -56,6 +57,14 @@ const ReviewPage = () => {
         dispatch(setMapInfo([]))
     },[])
 
+    const clickCreateReview = ()=>{
+        if(accessToken === ""){
+            alert("로그인이 필요한 서비스입니다.")
+            return;
+        }
+        setShowModal(true)
+    }
+
   return (
     <div className='review-page-container'>
         <div className='review-page-box'>
@@ -64,7 +73,7 @@ const ReviewPage = () => {
             </div>
             <div className='review-page-tap'>
                 <div className='review-page-create-btn'>
-                    <Button variant="success" onClick={()=>setShowModal(true)}>리뷰 작성하기</Button>
+                    <Button variant="success" onClick={()=>clickCreateReview()}>리뷰 작성하기</Button>
                 </div>
                 <div className='review-page-filter'>
                     <span className="click-sort" ref={sortNewRef} onClick={()=>sortReiviwData("NEW")} style={{cursor: "pointer"}}>최신순</span>

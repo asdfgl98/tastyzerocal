@@ -179,6 +179,7 @@ export const likeCount = async(postId: string, accessToken: string, isMyPage: bo
 
   } catch(err){
     console.error('좋아요 클릭 요청 오류 발생', err)
+    return;
   }
 }
 

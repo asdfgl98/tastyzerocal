@@ -90,9 +90,9 @@ const Login:React.FC<OwnProp> = ({userPage, setUserPage}) => {
             <input type="password" placeholder='비밀번호를 입력해주세요.' ref={passwordRef} onKeyDown={(e)=> {if(e.key ==="Enter"){clickLogin()}}}/>
             <button onClick={clickLogin}>로그인</button>
             <div className="other-box">
-                <Link to={""} style={{minWidth: "100px", textAlign : "right", color:"gray"}} onClick={()=>setUserPage(!userPage)}>회원가입</Link>
-                <span style={{marginLeft : "5px", marginRight: "5px"}}>|</span>
-                <Link to={""} style={{minWidth: "100px", color:"gray"}}>비밀번호 찾기</Link>
+                <Link to={""} style={{minWidth: "100px", textAlign : "center", color:"gray"}} onClick={()=>setUserPage(!userPage)}>회원가입</Link>
+                {/* <span style={{marginLeft : "5px", marginRight: "5px"}}>|</span> */}
+                {/* <Link to={""} style={{minWidth: "100px", color:"gray"}}>비밀번호 찾기</Link> */}
             </div> 
             <div className='social-login-container'>
                 <img src={"./images/kakao_login_medium_wide.png"} alt="카카오 로그인" onClick={kakaoLoginClick}/>

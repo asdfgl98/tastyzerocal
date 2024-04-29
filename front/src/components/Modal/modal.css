@@ -1,18 +1,17 @@
 .modal-container {
-    width: 50%;
+    width: 835px;
     height: 30vh;
     /* background-color: skyblue; */
     /* border: 1px solid black; */
     border-radius: 0.8rem;
     margin-top: 2px;
     margin-bottom: 25px;
-    margin-left: 25%;
     display: flex;
     color: #333;
 }
 
 .region-box {
-    width:30%;
+    width:220px;
     height:100%;
     overflow: hidden;    
     background-color: #E0475B;
@@ -49,7 +48,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
+    width: 770px;
     background-color: #E0475B;
     color: white;
     font-weight: bold;
@@ -149,4 +148,31 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 1s ease-out; /* 애니메이션 효과 설정 */
+}
+
+
+@media screen and (max-width: 430px){
+    .modal-container {
+        width: 430px;
+        height: 30vh;
+        /* background-color: skyblue; */
+        /* border: 1px solid black; */
+        border-radius: 0.8rem;
+        margin-top: 2px;
+        margin-bottom: 25px;
+        display: flex;
+        color: #333;
+    }
+
+    .region-box {
+        width:400px;
+        height:100%;
+        overflow: hidden;    
+        background-color: #E0475B;
+        color: white;
+        font-weight: bold;
+        
+    }
+
+    
 }

@@ -1,20 +1,12 @@
 .map-container {
     background-color: white;
     height:100%;
-    width: 30%;
+    width: 100%;
 }
 
 .mapStyle {
     border-radius: 10px;
     height:100%;
-    width:60vw;
-}
-
-@media screen and (max-width: 844px){
-    .map-container {
-        height:0px;
-        width: 0px;
-    }
 }
 
 .infowindow-container {
@@ -68,13 +60,22 @@
     
 }
 
+@media screen and (max-width: 430px){
+    .map-container {
+        width:100%;
+        height: 40%;
+        margin-top: 90px;
+    }
+}
+
+
 
 
 /* 리뷰 맵 */
 .review-map-container{
     width: 75%;
     height: 55vh;
-    background-color: black;
+    /* background-color: black; */
 }
 
 .review-mapStyle {
@@ -82,5 +83,21 @@
     height:100%;
     /* width:60vw; */
 }
+
+@media screen and (max-width: 430px){
+    .review-map-container {
+        width: 100%;
+        height: 400px;
+        margin-top: 80px;
+    }
+
+    .review-mapStyle {
+        
+        border-radius: 10px;
+        height:100%;
+        width:100%;
+    }
+}
+
 
 

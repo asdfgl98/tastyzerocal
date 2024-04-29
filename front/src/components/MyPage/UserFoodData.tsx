@@ -23,6 +23,7 @@ const UserFoodData = () => {
     useEffect(()=>{
         if(userData.id !== ""){
           getUserDataList(userData.id, accessToken).then((data: any)=>{
+            console.log(data)
             setUserDataList(data)
           })
         }

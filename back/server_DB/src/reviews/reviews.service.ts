@@ -23,11 +23,11 @@ export class ReviewsService {
             throw new BadRequestException("createReview : Review 생성 오류")
         }
         
-        return true
+        return result
     }
 
     /**모든 리뷰 조회 Model*/
-    async getReviewData (){
+    async getAllReviewData (){
         const result = await this.ReviewModel.find({},{
             comments: false,
             updatedAt: false,
@@ -112,7 +112,7 @@ export class ReviewsService {
     async likeCount(postId: string, userId: string, isMyPage: boolean){
         let find = await this.ReviewModel.findById(postId)
         const include = find.likeCount.includes(userId)
-        this.usersService.likeList(include, userId, postId)
+        this.usersService.likeListUpdate(include, userId, postId)
         let result: any;
         if (include){
             result = await this.ReviewModel.findByIdAndUpdate(
@@ -135,7 +135,6 @@ export class ReviewsService {
             return await this.usersService.getUserDataList(userId)
 
         }
-        
-        return await this.getReviewData()
+        return await this.getAllReviewData()
     }
 }

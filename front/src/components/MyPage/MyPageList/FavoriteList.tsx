@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./myPageList.css"
 import Card from 'react-bootstrap/Card';
 import { userDataList } from '../../../model/types';
+import FoodCard from '../../Main/FoodCard';
+
 
 interface OwnProp {
   userDataList: userDataList
@@ -9,11 +11,13 @@ interface OwnProp {
 }
 
 const FavoriteList:React.FC<OwnProp> = ({userDataList, setUserDataList}) => {
+  const setUserData = (data:any)=>{}
+
   return (
     <div className='mypage-list-container'>
-      <div>
-        
-      </div>
+      {userDataList?.favoriteList?.map((item)=>(
+        <FoodCard key={item.id} item={item} setClickDetailTap={setUserData} isMyPage={true}/>
+      ))}
     </div>
   )
 }

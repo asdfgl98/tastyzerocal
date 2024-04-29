@@ -47,6 +47,8 @@ export interface FavoriteList {
     road_address_name: string
     phone: string | null
     place_url: string
+    x: string
+    y: string
 }
 
 /** 회원 정보 타입 */
@@ -102,5 +104,6 @@ export interface CommentData extends WriteComment{
 
 export interface userDataList {
     likeList : AllReviewData[],
-    favoriteList : FavoriteList[]
+    favoriteList : FavoriteList[],
+    reviewList: AllReviewData[]
 }

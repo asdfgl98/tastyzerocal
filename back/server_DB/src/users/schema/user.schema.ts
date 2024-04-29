@@ -53,6 +53,12 @@ export class User {
     })
     likeList: mongoose.Schema.Types.ObjectId[]
 
+    @Prop({
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Review',
+    })
+    reviewList: mongoose.Schema.Types.ObjectId[]
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

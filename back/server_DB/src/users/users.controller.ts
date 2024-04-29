@@ -87,7 +87,8 @@ export class UsersController {
   ){
     const {user} = req
     const s3ImageUrl = await this.AwsService.imageUploadToS3(createReviewDto.image)
-    const result = await this.ReviewService.createReview(createReviewDto, s3ImageUrl, user._id)
+    const reviewResult = await this.ReviewService.createReview(createReviewDto, s3ImageUrl, user._id)
+    const result = await this.usersService.ReviewListUpdate(false ,user.id, reviewResult._id)
     return result
   }  
 

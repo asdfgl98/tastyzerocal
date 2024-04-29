@@ -194,7 +194,7 @@ export class UsersService {
     return updateFavorite.favoriteList      
   }
 
-  async likeList(include: boolean, userId: string, postId: string){
+  async likeListUpdate(include: boolean, userId: string, postId: string){
     let result: any;
     if(include){
       result = await this.UserModel.findOneAndUpdate(
@@ -213,6 +213,27 @@ export class UsersService {
     }
   }
 
+  async ReviewListUpdate(isDelete: boolean, userId: string, postId: string | ObjectId){
+    let result: any;
+    if(isDelete){
+      result = await this.UserModel.findOneAndUpdate(
+        {id: userId},
+        {$pull: {reviewList: postId}}
+      )
+    }
+    else{
+      result = await this.UserModel.findOneAndUpdate(
+        {id: userId},
+        {$push: {reviewList: postId}}
+      )
+    }
+    if(!result){
+      throw new BadRequestException("ReviewListUpdate : 리뷰 리스트 쿼리 에러")
+    }
+
+    return true
+  }
+
   async getUserDataList(id: string){
     const result = await this.UserModel.findOne({id},
       {
@@ -225,15 +246,15 @@ export class UsersService {
         password: false,
         token:false,
       }    
-    ).populate({path: 'likeList', populate: { path: 'createBy'}})
-
+    ).populate({path: 'likeList', populate: { path: 'createBy'}}).populate("reviewList")
     if(!result){
       throw new BadRequestException("getUserDataList : mypage 유저 정보 쿼리 오류")
     }
 
     return {
       favoriteList: result.favoriteList,
-      likeList: result.likeList
+      likeList: result.likeList,
+      reviewList: result.reviewList
     }
   }
 }

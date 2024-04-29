@@ -11,7 +11,7 @@ export class ReviewsController {
   /**모든 리뷰 조회 */
   @Get()
   async getReviewData(){
-    return await this.reviewsService.getReviewData()
+    return await this.reviewsService.getAllReviewData()
   }
 
   @Delete()

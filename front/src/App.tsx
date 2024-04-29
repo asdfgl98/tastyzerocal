@@ -10,6 +10,7 @@ import { getAccessTokenWithRefreshToken, getUserDataWithToken } from './utils/JW
 import { useAppDispatch, useAppSelector } from './Store/hooks/hooks';
 import ReviewPage from './components/ReviewPage/ReviewPage';
 import ReviewDetail from './components/ReviewPage/ReviewDetail';
+import PrivateRoute from './utils/PrivateRoute-Utils';
 
 
 const App:React.FC = ()=> {
@@ -36,11 +37,17 @@ const App:React.FC = ()=> {
     <div className="App">
       <Header/>
       <Routes>
-        <Route path="/" element={<MainPage/>}></Route>
-        <Route path="/user" element={<User/>}></Route>
-        <Route path="/mypage/:type" element={<MyPage/>}></Route>
-        <Route path="/review" element={<ReviewPage/>}></Route>
-        <Route path="/reviewDetail/:_id" element={<ReviewDetail/>}></Route>
+          <Route path="/" element={<MainPage/>}></Route>
+          <Route path="/review" element={<ReviewPage/>}></Route>
+          <Route path="/reviewDetail/:_id" element={<ReviewDetail/>}></Route>
+          
+        <Route element={<PrivateRoute authentication={false} accessToken={accessToken}/>}>
+          <Route path="/user" element={<User/>}></Route>
+        </Route>
+
+        <Route element={<PrivateRoute authentication={true} accessToken={accessToken}/>}>
+          <Route path="/mypage" element={<MyPage/>}></Route>
+        </Route>
       </Routes>
       
     </div>

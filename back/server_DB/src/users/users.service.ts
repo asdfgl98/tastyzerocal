@@ -212,4 +212,28 @@ export class UsersService {
       throw new BadRequestException("likeList : 유저 좋아요 리스트 쿼리 에러")
     }
   }
+
+  async getUserDataList(id: string){
+    const result = await this.UserModel.findOne({id},
+      {
+        address: false,
+        addressDetail: false,
+        email: false,
+        id: false,
+        loginType: false,
+        name: false,
+        password: false,
+        token:false,
+      }    
+    ).populate({path: 'likeList', populate: { path: 'createBy'}})
+
+    if(!result){
+      throw new BadRequestException("getUserDataList : mypage 유저 정보 쿼리 오류")
+    }
+
+    return {
+      favoriteList: result.favoriteList,
+      likeList: result.likeList
+    }
+  }
 }

@@ -48,7 +48,7 @@ const ReviewPage = () => {
             </div>
             <div className='review-page-card-box'>                
                 {reviewData?.map((item, index)=>(
-                    <ReviewCard key={index} data={item} reviewData={reviewData} setReviewData={setReviewData}/>
+                    <ReviewCard key={index} data={item} reviewData={reviewData} setReviewData={setReviewData} isMyPage={false}/>
                 ))}
             </div>
         </div>

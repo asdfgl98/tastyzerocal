@@ -42,6 +42,4 @@ export class CreateUserDto{
         accessToken: string,
         refreshToken: string
     }
-
-
 }

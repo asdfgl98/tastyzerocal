@@ -117,3 +117,18 @@ export const inputValidation = ({current}:any)=>{
         console.error(`${userData.loginType} 회원 탈퇴 요청 오류 발생`, err)
     }    
   }
+
+
+  /** 마이페이지 데이터 불러오기 */
+  export const getUserDataList = async(userId:string, accessToken: string)=>{
+    try{
+      const {data} = await dbAxios.get(`/users/mydata/${userId}`, {
+        headers: {
+          "Authorization" : `Bearer ${accessToken}`
+        }
+      })
+      return data
+    } catch(err){
+      console.error("좋아요 리스트 요청 오류", err)
+    }
+  }

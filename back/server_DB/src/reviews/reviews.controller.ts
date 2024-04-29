@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards 
 import { ReviewsService } from './reviews.service';
 import { AccessTokenGuard, BearerTokenGuard } from 'src/guard/bearer-token.guard';
 import { WriteCommentDTO } from './dto/write-comment.dto';
+import { String } from 'aws-sdk/clients/batch';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -54,13 +55,14 @@ export class ReviewsController {
      this.reviewsService.viewCount(postId)
   }
 
-  @Put('/like/:postId')
+  @Put('/like')
   @UseGuards(BearerTokenGuard)
   async likeCount(
-    @Param('postId') postId: string,
+    @Query('postId') postId: string,
+    @Query('isMyPage') isMyPage: boolean,
     @Req() req:any
   ){
-    return await this.reviewsService.likeCount(postId, req.user.id)
+    return await this.reviewsService.likeCount(postId, req.user.id, isMyPage)
   }
 
   

@@ -109,7 +109,7 @@ export class ReviewsService {
         })
     }
 
-    async likeCount(postId: string, userId: string){
+    async likeCount(postId: string, userId: string, isMyPage: boolean){
         let find = await this.ReviewModel.findById(postId)
         const include = find.likeCount.includes(userId)
         this.usersService.likeList(include, userId, postId)
@@ -130,6 +130,12 @@ export class ReviewsService {
         if(!result){
             throw new BadRequestException("likeCount : 좋아요 쿼리 에러")
         }
+
+        if(isMyPage){
+            return await this.usersService.getUserDataList(userId)
+
+        }
+        
         return await this.getReviewData()
     }
 }

@@ -90,4 +90,10 @@ export class UsersController {
     const result = await this.ReviewService.createReview(createReviewDto, s3ImageUrl, user._id)
     return result
   }  
+
+  @Get('/mydata/:id')
+  @UseGuards(BearerTokenGuard)
+  async getUserDataList(@Param('id') id:string){
+    return await this.usersService.getUserDataList(id)
+  }
 }

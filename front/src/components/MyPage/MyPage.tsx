@@ -1,14 +1,19 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./MyPage.css"
 import { useAppSelector } from '../../Store/hooks/hooks'
 import UserFoodData from './UserFoodData'
 import UserEdit from './UserEdit'
+import { getUserDataList } from '../../utils/user-Utils'
+import { userDataList } from '../../model/types'
+
+
 
 const MyPage = () => {
-    const userData = useAppSelector((state)=>state.userData)
+    const userData = useAppSelector((state)=>state.userData)  
     const foodDataRef = useRef<HTMLDivElement>(null)
     const userEditRef = useRef<HTMLDivElement>(null)
     const [mypageTap, setMyPageTap] = useState<boolean>(true)
+    
     const mypageTapClick = (check: boolean)=>{
       if(check){
         userEditRef.current!.className = ""
@@ -21,6 +26,8 @@ const MyPage = () => {
         setMyPageTap(check)
       }
     }
+
+    
 
   return (
     <div className='mypage-container'>

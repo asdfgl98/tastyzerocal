@@ -99,3 +99,8 @@ export interface CommentData extends WriteComment{
     userId: string
     userName: string
 }
+
+export interface userDataList {
+    likeList : AllReviewData[],
+    favoriteList : FavoriteList[]
+}

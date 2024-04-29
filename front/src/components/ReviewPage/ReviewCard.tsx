@@ -13,10 +13,11 @@ import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 interface OwnProp {
   data: AllReviewData
   reviewData: AllReviewData[]
-  setReviewData(data: AllReviewData[]): void
+  setReviewData(data: any): void
+  isMyPage: boolean
 }
 
-const ReviewCard:React.FC<OwnProp> = ({data, setReviewData}) => {
+const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
   const [checkLike, setCheckLike] = useState<boolean>(false)
   const navigater = useNavigate()
   const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
@@ -32,7 +33,7 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData}) => {
   }
 
   const clickLikeIcon = async(postId: string)=>{
-    const response = await likeCount(postId, accessToken)
+    const response = await likeCount(postId, accessToken, isMyPage)
     setReviewData(response)
   }
 

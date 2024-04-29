@@ -145,14 +145,13 @@ export const deleteComment = async(commentId: string, postId: string, accessToke
 }
 
 /** 리뷰 좋아요 클릭 */
-export const likeCount = async(postId: string, accessToken: string)=>{
+export const likeCount = async(postId: string, accessToken: string, isMyPage: boolean)=>{
   try{
-    const {data} = await dbAxios.put(`/reviews/like/${postId}`,null, {
+    const {data} = await dbAxios.put(`/reviews/like?postId=${postId}&isMyPage=${isMyPage}`,null, {
       headers: {
         "Authorization" : `Bearer ${accessToken}`
       }
     })
-    console.log(data[0].likeCount)
     return data
 
   } catch(err){

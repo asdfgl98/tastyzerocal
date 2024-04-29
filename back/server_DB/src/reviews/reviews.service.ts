@@ -31,7 +31,7 @@ export class ReviewsService {
         const result = await this.ReviewModel.find({},{
             comments: false,
             updatedAt: false,
-        }).populate('createBy', "createBy name id")
+        }).populate('createBy', "createBy name id").sort({createdAt: -1}) // 내림차순 정렬(최신순)
         
         if(!result){
             throw new BadRequestException("getReviewData : Review 데이터 조회 오류")

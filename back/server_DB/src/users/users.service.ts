@@ -213,7 +213,9 @@ export class UsersService {
     }
   }
 
-  async ReviewListUpdate(isDelete: boolean, userId: string, postId: string | ObjectId){
+  async reviewListUpdate(isDelete: boolean, userId: string, postId: string | ObjectId){
+    await this.UserModel.updateMany({}, {$pull: {likeList: postId}})
+    
     let result: any;
     if(isDelete){
       result = await this.UserModel.findOneAndUpdate(
@@ -228,13 +230,15 @@ export class UsersService {
       )
     }
     if(!result){
-      throw new BadRequestException("ReviewListUpdate : 리뷰 리스트 쿼리 에러")
+      throw new BadRequestException("ReviewListUpdate : 리뷰 리스트 업데이트 쿼리 에러")
     }
 
     return true
   }
 
-  async getUserDataList(id: string){
+  
+  /** 마이페이지 데이터 Select  */
+  async getMyPageData(id: string){
     const result = await this.UserModel.findOne({id},
       {
         address: false,
@@ -246,11 +250,10 @@ export class UsersService {
         password: false,
         token:false,
       }    
-    ).populate({path: 'likeList', populate: { path: 'createBy'}}).populate("reviewList")
+    ).populate({path: 'likeList', populate: { path: 'createBy'}}).populate({path: "reviewList", populate: {path: 'createBy'}})
     if(!result){
-      throw new BadRequestException("getUserDataList : mypage 유저 정보 쿼리 오류")
+      throw new BadRequestException("getUserDataList : mypage 유저 정보 SELECT 쿼리 오류")
     }
-
     return {
       favoriteList: result.favoriteList,
       likeList: result.likeList,

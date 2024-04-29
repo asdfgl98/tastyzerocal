@@ -12,7 +12,7 @@ const LikeList:React.FC<OwnProp> = ({userDataList, setUserDataList}) => {
 
 
   useEffect(()=>{
-    console.log(userDataList.likeList)
+    console.log(userDataList)
   },[userDataList])
   return (
     <div className='mypage-list-container'>

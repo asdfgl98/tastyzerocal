@@ -1,9 +1,11 @@
 .review-detail-container {
     display: flex;
     justify-content: center;
+    
 }
 
 .review-detail-box {
+    position: relative;
     width: 1000px;
     /* height: 100px; */
     background-color: white;

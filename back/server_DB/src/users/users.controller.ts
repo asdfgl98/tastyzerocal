@@ -88,13 +88,13 @@ export class UsersController {
     const {user} = req
     const s3ImageUrl = await this.AwsService.imageUploadToS3(createReviewDto.image)
     const reviewResult = await this.ReviewService.createReview(createReviewDto, s3ImageUrl, user._id)
-    const result = await this.usersService.ReviewListUpdate(false ,user.id, reviewResult._id)
+    const result = await this.usersService.reviewListUpdate(false ,user.id, reviewResult._id)
     return result
   }  
 
   @Get('/mydata/:id')
   @UseGuards(BearerTokenGuard)
   async getUserDataList(@Param('id') id:string){
-    return await this.usersService.getUserDataList(id)
+    return await this.usersService.getMyPageData(id)
   }
 }

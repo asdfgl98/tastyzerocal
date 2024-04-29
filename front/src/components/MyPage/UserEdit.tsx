@@ -30,14 +30,7 @@ const UserEdit:React.FC<OwnProp> = ({userData}) => {
     const addressRef = useRef<HTMLInputElement>(null)
     const addressDetailRef = useRef<HTMLInputElement>(null)
 
-    /** DaumPostPopUp 오픈 함수 */
-  const openPost = ()=>{
-    open({
-        onComplete: handleComplete
-    })
-    addressRef.current!.focus()
-    addressDetailRef.current!.focus()
-  }
+    
 
   const onChangeData = (e: any)=>{
     const key = e.target.name
@@ -45,6 +38,15 @@ const UserEdit:React.FC<OwnProp> = ({userData}) => {
       ...updateData,
       [key] : e.target.value
     })
+  }
+
+  /** DaumPostPopUp 오픈 함수 */
+  const openPost = ()=>{
+    open({
+        onComplete: handleComplete
+    })
+    addressRef.current!.focus()
+    addressDetailRef.current!.focus()
   }
 
   /** 주소 선택시 실행 함수 */

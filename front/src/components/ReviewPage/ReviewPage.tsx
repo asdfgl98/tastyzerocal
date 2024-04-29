@@ -42,8 +42,8 @@ const ReviewPage = () => {
                 </div>
                 <div className='review-page-filter'>
                     <span>최신순</span>
-                    <span>리뷰순</span>
-                    <span>평점순</span>
+                    <span>좋아요순</span>
+                    <span>조회순</span>
                 </div>
             </div>
             <div className='review-page-card-box'>                

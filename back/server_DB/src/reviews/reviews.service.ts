@@ -39,9 +39,23 @@ export class ReviewsService {
         return result
     }
 
-    async deleteAllReview(){
-        const result = await this.ReviewModel.deleteMany()
-        return "모든 리뷰 삭제"
+    async deleteReview(postId: string, userId: string){
+        const find = await this.ReviewModel.findById(postId).populate('createBy')
+        if(!find){
+            throw new BadRequestException("존재하지 않는 리뷰입니다.")
+        }
+        const findId: any = find.createBy.id
+        if(findId !== userId){
+            throw new BadRequestException("deleteReview : 삭제 권한이 부여되지 않았습니다. 작성자 본인인지 확인해주세요")
+        }
+
+        const result = await this.ReviewModel.findByIdAndDelete(postId).catch((err)=>{
+            throw new BadRequestException("deleteReview : 리뷰 삭제중 오류가 발생했습니다.")
+        })
+
+        return true
+
+        
     }
 
     async getReviewDataWithId(id: string){
@@ -132,7 +146,7 @@ export class ReviewsService {
         }
 
         if(isMyPage){
-            return await this.usersService.getUserDataList(userId)
+            return await this.usersService.getMyPageData(userId)
 
         }
         return await this.getAllReviewData()

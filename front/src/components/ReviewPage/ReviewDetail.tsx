@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./ReviewDetail.css"
 import { useLocation, useParams } from 'react-router-dom'
 import { AllReviewData, CommentData, WriteComment } from '../../model/types'
@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppSelector } from '../../Store/hooks/hooks';
-import { deleteComment, getComments, writeCommentOnReview } from '../../utils/review-Utils';
+import { deleteComment, deleteReview, getComments, writeCommentOnReview } from '../../utils/review-Utils';
 
 
 const ReviewDetail = () => {
@@ -19,6 +19,7 @@ const ReviewDetail = () => {
     const {_id} = useParams()
     const userId = useAppSelector((state)=>state.userData.id)
     const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
+    const commentRef = useRef<HTMLTextAreaElement>(null)
     const [writeComment, setWriteComment] = useState<WriteComment>({
         postId: _id!,
         comment: ""
@@ -42,6 +43,7 @@ const ReviewDetail = () => {
         const comment = await writeCommentOnReview(writeComment, accessToken)
         if(comment){
             setCommentData(comment)
+            commentRef.current!.value = ""
         }
     }
 
@@ -51,10 +53,22 @@ const ReviewDetail = () => {
             setCommentData(result)
         }
     }
+    const clickDeleteReview = async()=>{
+        const confirm = window.confirm('리뷰를 삭제하시겠습니까?')
+        if(!confirm){
+            return;
+        }
+        const result = await deleteReview(_id!, accessToken)
+        if(result){
+            alert("리뷰가 삭제되었습니다.")
+            window.location.href = "/review"
+        }
+    }
 
   return (
     <div className='review-detail-container'>
         <div className='review-detail-box'>
+        {userId === data.createBy.id ? <FontAwesomeIcon onClick={()=>clickDeleteReview()} icon={faTrashCan} style={{position: "absolute", right: "15px", top: "15px", cursor: "pointer"}}/> : null}
             <div className='review-detail-title'>
                 <h4>{data.title}</h4>
                 <span>{data.createBy.name}님의 리뷰 | {data.createdAt} 작성</span>
@@ -100,7 +114,7 @@ const ReviewDetail = () => {
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>리뷰에 대한 댓글을 남겨보세요!</Form.Label>
                             <div style={{display: "flex"}}>
-                                <Form.Control as="textarea" rows={3} onChange={(e)=>changeComment(e)}/>
+                                <Form.Control as="textarea" rows={3} onChange={(e)=>changeComment(e)} ref={commentRef}/>
                                 <Button onClick={()=>clickWrite()} style={{width: "100px", marginLeft: "15px"}}variant="success">작성하기</Button>
                             </div>
                         </Form.Group>

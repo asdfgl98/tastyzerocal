@@ -3,10 +3,14 @@ import { ReviewsService } from './reviews.service';
 import { AccessTokenGuard, BearerTokenGuard } from 'src/guard/bearer-token.guard';
 import { WriteCommentDTO } from './dto/write-comment.dto';
 import { String } from 'aws-sdk/clients/batch';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('reviews')
 export class ReviewsController {
-  constructor(private readonly reviewsService: ReviewsService) {}
+  constructor(
+    private readonly reviewsService: ReviewsService,
+    private readonly usersService: UsersService
+  ) {}
 
   /**모든 리뷰 조회 */
   @Get()
@@ -15,8 +19,14 @@ export class ReviewsController {
   }
 
   @Delete()
-  async deleteAllReview(){
-    return await this.reviewsService.deleteAllReview()
+  @UseGuards(BearerTokenGuard)
+  async deleteReview(
+    @Query('postId') postId: string,
+    @Req() req: any
+  ){
+    await this.reviewsService.deleteReview(postId, req.user.id)
+    await this.usersService.reviewListUpdate(true, req.user.id, postId)
+    return true
   }
 
   @Get()

@@ -1,8 +1,8 @@
 import React from 'react'
 import "./FoodDetail.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeartSolid} from '@fortawesome/free-solid-svg-icons'
-import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
+import { faBookmark as faSolid} from '@fortawesome/free-solid-svg-icons'
+import { faBookmark as faRegular} from '@fortawesome/free-regular-svg-icons'
 import { kakaoCategorySearch } from '../../utils/kakao-Utils'
 import { FavoriteList, MapInfoState } from '../../model/types'
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks'
@@ -31,9 +31,9 @@ const FoodCard:React.FC<OwnProp> = ({item, setClickDetailTap, isMyPage}) => {
     <span className='store-name'>{item.place_name}</span> 
     <span className="store-cate">{item.category_name.split(' ')[item.category_name.split(' ').length-1]}</span>
     {  checkFavorite(item.id, userInfo.favoriteList) ?
-      <FontAwesomeIcon icon={faHeartRegular} size='xl' color='red'className='icon-favorite' onClick={()=>addFavorite(item, userInfo, accessToken, dispatch)}/>
+      <FontAwesomeIcon icon={faRegular} size='xl' color='green' className='icon-favorite' onClick={()=>addFavorite(item, userInfo, accessToken, dispatch)}/>
       :
-      <FontAwesomeIcon icon={faHeartSolid} size='xl' color='red'className='icon-favorite' onClick={()=>deleteFavorite(item, userInfo, accessToken, dispatch)}/>
+      <FontAwesomeIcon icon={faSolid} size='xl' color='green' className='icon-favorite' onClick={()=>deleteFavorite(item, userInfo, accessToken, dispatch)}/>
     } 
     <p>🗺️ {item.road_address_name}</p>
     <p>🍳 {item.category_name.split(' ')[2]}</p>

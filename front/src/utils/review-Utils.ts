@@ -50,7 +50,7 @@ export const clickTag = (e:any ,item: string, reviewTag:string[], setReviewTag: 
     }  
 }
 
-/**review 생성 요청 함수 */
+/** 리뷰 생성 요청 함수 */
 export const createReview = async(reviewData: ReviewData, accessToken: string)=>{
   if(accessToken === ""){
     alert("로그인이 필요한 서비스 입니다.")
@@ -70,6 +70,29 @@ export const createReview = async(reviewData: ReviewData, accessToken: string)=>
     alert("리뷰 생성 중 오류가 발생했습니다.")
   }
 }
+
+/** 리뷰 삭제 요청 함수 */
+export const deleteReview = async(postId: string, accessToken: string)=>{
+  if(accessToken === ""){
+    alert("로그인이 필요한 서비스 입니다.")
+    return;
+  }
+  console.log(postId)
+  try{
+    const {data} = await dbAxios.delete('/reviews', {
+      headers: {
+        "Authorization" : `Bearer ${accessToken}`
+      },
+      params: {
+        postId
+      }
+    })
+    return data
+  } catch(err){
+    console.error('리뷰 삭제 요청 오류', err)
+  }
+}
+
 /** 리뷰 게시물의 댓글 불러오기 함수 */
 export const getComments = async(postId: string, setCommentData: any)=>{
   try{

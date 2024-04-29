@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 import { clickCategory, clickTag, createReview } from '../../utils/review-Utils';
 import { MapInfoState, ReviewData } from '../../model/types';
 import { dbAxios } from '../../model/axios';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 interface OwnProp {
     showModal : boolean
@@ -23,6 +24,7 @@ const foodType = ["한식", "양식", "일식", "중식", "분식", "디저트",
 const foodTag = ["매운", "달콤한", "시원한", "따듯한", "얼큰한", "새콤한", "고소한", "맛집", "기념일", "오마카세", "상견례", "데이트", "소개팅", "가족식사", "부모님", "회식", "술안주", "해장", "이자카야", "혼밥", "분위기 좋은"]
 
 const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
+  const open = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js")
     const [clickDetailTap, setClickDetailTap] = useState<string>("")
     const storeData = useAppSelector((state)=>state.kakaomapData.reviewData)
     const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
@@ -32,6 +34,15 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
     const [reviewTag, setReviewTag] = useState<string[]>([])
     const [content, setContent] = useState<string>("")
     const [imageUrl, setImageUrl] = useState<string>("")
+    const directPlaceNameRef = useRef<HTMLInputElement>(null)
+    const directRoadAddressNameRef = useRef<HTMLInputElement>(null)
+    const directPhoneRef = useRef<HTMLInputElement>(null)
+    const [directInputCheck, setDirectInputCheck] = useState<boolean>(false)
+    const [directInputData, setDirectInputData] = useState<any>({
+      place_name: "",
+      road_address_name: "",
+      phone: ""
+    })
     const quillRef = useRef<any>(null)  
 
     /** 이미지 서버로 저장 */
@@ -95,7 +106,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
     const clickCreateReview = ()=>{
       const reviewData:ReviewData = {
         title: reviewTitle!,
-        store: storeData,
+        store: directInputCheck ?  directInputData : storeData,
         category: reviewCategory,
         tag : reviewTag,
         content: content!.replaceAll(/<img[^>]*>/g, ''),
@@ -105,13 +116,74 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         Object.keys(reviewData.store).length !==0 &&
         reviewData.content !== ""
       ){
+        console.log(reviewData)
         createReview(reviewData, accessToken)
       }
       else{
         alert("제목, 가게 선택, 내용은 필수항목입니다.")
       }
-    }
+    }    
     
+    const setDirectInput = ()=>{      
+      directPlaceNameRef.current!.disabled = directInputCheck
+      directRoadAddressNameRef.current!.disabled = directInputCheck
+      directPhoneRef.current!.disabled = directInputCheck
+      setDirectInputCheck(!directInputCheck)
+    }
+
+    const directInputStoreData = (e:any, type: string)=>{
+      if(type === "name"){
+        setDirectInputData({
+          ...directInputData,
+          place_name: e.target.value
+        })
+      }
+      else if(type === "address"){
+        setDirectInputData({
+          ...directInputData,
+          road_address_name: e.target.value
+        })
+      }
+      else if(type === "phone"){
+        setDirectInputData({
+          ...directInputData,
+          phone: e.target.value
+        })
+      }
+    }
+
+    /** DaumPostPopUp 오픈 함수 */
+  const openPost = ()=>{
+    open({
+        onComplete: handleComplete
+    })
+    directRoadAddressNameRef.current!.focus()
+    directPhoneRef.current!.focus()
+  }
+
+  /** 주소 선택시 실행 함수 */
+  const handleComplete = (data:any) => {
+    let fullAddress = data.address;
+    let jibunAddress = data.jibunAddress;
+
+    // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+    if (data.userSelectedType === 'R') {   // 도로명 주소
+      directRoadAddressNameRef.current!.value = fullAddress
+      setDirectInputData({
+        ...directInputData,
+        road_address_name: fullAddress
+      })
+    }
+    else{
+      directRoadAddressNameRef.current!.value = jibunAddress
+      setDirectInputData({
+        ...directInputData,
+        road_address_name: jibunAddress
+      })
+    }
+    // addressRef.current!.disabled = true
+    directPhoneRef.current!.focus()
+  };
     
 
   return (
@@ -141,9 +213,38 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
             </FloatingLabel>
             </div>
             <h4 style={{margin: "30px 10px 15px"}}>가게 선택</h4>
-            <div className='review-create-map'>
+            {!directInputCheck && <div className='review-create-map'>
                 <FoodDetail setClickDetailTap={setClickDetailTap}/>
                 <KakaoMap clickDetailTap={clickDetailTap} containerCSS='review-map-container' mapCSS='review-mapStyle'/>
+            </div>}
+            <div className="direct-input">
+            <Button onClick={()=>setDirectInput()} variant="success" style={{height: "58px"}}>직접 입력</Button>
+              <FloatingLabel                 
+                  controlId="floatingInput"
+                  label="가게명"
+                  className="mb-3"
+                  onChange={(e:any)=>directInputStoreData(e, "name")}
+              >
+                  <Form.Control type="text" placeholder="가게명" ref={directPlaceNameRef} disabled/>
+              </FloatingLabel>
+              <FloatingLabel
+                  controlId="floatingInput"
+                  label="주소"
+                  className="mb-3"
+                  onClick={()=>openPost()}
+              >
+                  <Form.Control type="text" placeholder="주소" ref={directRoadAddressNameRef} disabled/>
+              </FloatingLabel>
+              <FloatingLabel
+                  controlId="floatingInput"
+                  label="가게 연락처(선택)"
+                  className="mb-3"
+                  onChange={(e:any)=>directInputStoreData(e, "phone")}
+                  style={{overflow:"hidden"}}
+                  >                 
+                  <Form.Control type="text" placeholder="연락처" ref={directPhoneRef} disabled/>
+              </FloatingLabel>
+
             </div>
             <div className='review-create-tag'>
                 <h4>카테고리</h4>

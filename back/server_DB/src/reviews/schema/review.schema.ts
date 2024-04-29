@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Types, Schema as MongooseSchema } from "mongoose";
 import { Comment } from "./comment.schema";
 import { CommentType } from "src/Types/type";
+import { koreanTime } from "src/Utils/JWT-Utils";
 
 
 
@@ -40,14 +41,14 @@ export class Review {
     createBy: Types.ObjectId
 
     @Prop({
-        default: Date.now
+        default: koreanTime()
     })
-    createdAt: Date
+    createdAt: string
 
     @Prop({
-        default: Date.now
+        default: koreanTime()
     })
-    updatedAt: Date
+    updatedAt: string
 
     @Prop()
     comments: CommentType[]

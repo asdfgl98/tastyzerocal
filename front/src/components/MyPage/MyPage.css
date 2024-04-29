@@ -1,26 +1,30 @@
 .mypage-container {
     padding: 0;
     margin: 0;
-    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
+    /* margin-bottom: 30px; */
+    /* background-color: white; */
 }
 
 .mypage-box {
     background-color: white;
-    height: 100vh;
+    /* height: 100vh; */
+    min-height: 900px;
     width: 950px;
     /* width: 50%; */
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
 }
 
 .mypage-tap{
     margin-top: 70px;
     display: flex;
     text-align: center;
-    background-color: #999999;
-    color: white;
-    
+    background-color: white;
+    color: gray
+    /* font-weight: bold;     */
 }
 
 .mypage-tap > div{
@@ -33,8 +37,8 @@
     
 }
 
-.choice-tap{
-    background-color: white;
-    color: black;
+.choice-tap{    
+    background-color: #198754;
+    color: white;
     font-weight: bold;
 }

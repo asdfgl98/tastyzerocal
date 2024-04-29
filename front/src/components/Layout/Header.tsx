@@ -59,7 +59,7 @@ const Header:React.FC = () => {
                     <Link to={"/user"} className="header-link">로그인</Link>
                     :
                     <>
-                    <Link to={"/mypage"} className="header-link" >{data.name} 님</Link>
+                    <Link to={"/mypage/userdata"} className="header-link" >{data.name} 님</Link>
                     <Link to={"/"} className="header-link" onClick={userlogOut}>로그아웃</Link>
                     </>
                     }

@@ -38,7 +38,7 @@ const App:React.FC = ()=> {
       <Routes>
         <Route path="/" element={<MainPage/>}></Route>
         <Route path="/user" element={<User/>}></Route>
-        <Route path="/mypage" element={<MyPage/>}></Route>
+        <Route path="/mypage/:type" element={<MyPage/>}></Route>
         <Route path="/review" element={<ReviewPage/>}></Route>
         <Route path="/reviewDetail/:_id" element={<ReviewDetail/>}></Route>
       </Routes>

@@ -5,6 +5,7 @@ import UserFoodData from './UserFoodData'
 import UserEdit from './UserEdit'
 import { getUserDataList } from '../../utils/user-Utils'
 import { userDataList } from '../../model/types'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 
 
@@ -15,10 +16,12 @@ const MyPage = () => {
     const [mypageTap, setMyPageTap] = useState<boolean>(true)
     
     const mypageTapClick = (check: boolean)=>{
+
       if(check){
         userEditRef.current!.className = ""
         foodDataRef.current!.className = "choice-tap"
         setMyPageTap(check)
+        
       }
       else{
         userEditRef.current!.className = "choice-tap"

@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 import mongoose, { Types } from "mongoose";
 import { FavoriteDTO } from "../dto/favorite-dto";
 import { Favorite } from "./favorite.schema";
+import { koreanTime } from "src/Utils/JWT-Utils";
 
 @Schema()
 export class User {
@@ -63,6 +64,6 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User)
 
-UserSchema.set('timestamps', {createdAt: true, updatedAt: true})
+UserSchema.set('timestamps', {createdAt: koreanTime(), updatedAt: true})
 
 

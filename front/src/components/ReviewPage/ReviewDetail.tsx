@@ -57,7 +57,7 @@ const ReviewDetail = () => {
         <div className='review-detail-box'>
             <div className='review-detail-title'>
                 <h4>{data.title}</h4>
-                <span>{data.createBy.name}님의 리뷰 | {data.createdAt}</span>
+                <span>{data.createBy.name}님의 리뷰 | {data.createdAt} 작성</span>
             </div>
             <div className='review-detail-info'>
                 <div className='review-detail-info-name'>

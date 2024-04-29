@@ -66,8 +66,8 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
                 <span className='count-span'>{data.viewCount}</span>
               </div>
               <div className='card-info'>
-                <span>박지훈</span>
-                <span>2024-01-01</span>
+                <span>{data.createBy.name} 님의 리뷰</span>
+                <span>{data.createdAt.split(" ")[0]}</span>
               </div>
             </div>
         </Card.Body>

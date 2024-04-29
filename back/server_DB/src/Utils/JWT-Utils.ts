@@ -1,4 +1,6 @@
+import * as moment from "moment-timezone"
 import { JWT } from "src/Types/type"
+
 
 /** Cookie에 JWT 추가 함수 */
 export const tokenCreateForCookies = (res:any, tokenName: string, token: JWT)=>{
@@ -25,3 +27,5 @@ export const tokenDeleteToCookies = (res: any, tokenName: string)=>{
         maxAge: 1000 * 60 * 60 * 24 * 7,        
       })
 }
+
+export const koreanTime = ()=>{ return moment.tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss")}

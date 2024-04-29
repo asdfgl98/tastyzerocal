@@ -1,6 +1,5 @@
 .food-data-container {
     /* background-color: black; */
-    height: 80vh;
     margin-top: 100px;
 }
 
@@ -25,12 +24,12 @@
     color: black;
     font-weight: bold;
     height: 100%;
-    border-left: 1px solid black;
-    border-Right: 1px solid black;
+    background-color: #c2e7ff;
+    /* border-left: 1px solid black; */
+    /* border-Right: 1px solid black; */
 }
 
 .food-data-list {
     height: 90%;
     width: 100%;
-    background-color: aquamarine;
 }

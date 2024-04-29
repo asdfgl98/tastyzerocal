@@ -6,6 +6,7 @@ import LikeList from './MyPageList/LikeList'
 import { userDataList } from '../../model/types'
 import { useAppSelector } from '../../Store/hooks/hooks'
 import { getUserDataList } from '../../utils/user-Utils'
+import { Route, Routes } from 'react-router-dom'
 
 
 const UserFoodData = () => {

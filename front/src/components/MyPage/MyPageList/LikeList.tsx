@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import "./myPageList.css"
-import CardList from './CardList'
-import { useAppSelector } from '../../../Store/hooks/hooks'
 import { userDataList } from '../../../model/types'
 import ReviewCard from '../../ReviewPage/ReviewCard'
 

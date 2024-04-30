@@ -69,7 +69,7 @@ const ReviewPage = () => {
     <div className='review-page-container'>
         <div className='review-page-box'>
             <div className='review-page-header'>
-                <h1>전체 게시판</h1>
+                <h1>맛집을 공유해주세요😁</h1>
             </div>
             <div className='review-page-tap'>
                 <div className='review-page-create-btn'>

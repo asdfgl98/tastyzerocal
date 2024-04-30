@@ -1,6 +1,5 @@
 .review-page-container {
     width: 100%;
-    /* height: 1000px; */
     display: flex;
     justify-content: center;
 }
@@ -41,7 +40,7 @@
     height: 100%;
     margin-top: 30px;
     margin-bottom: 30px;
-    padding: 20px;
+    padding: 1rem;
     display: flex;
     /* justify-content: space-between; */
     flex-wrap: wrap;
@@ -58,24 +57,37 @@
 
 @media screen and (max-width: 430px){
     .review-page-box {
-        width: 430px;
+        width: 100%;
     }
 
     .review-page-tap {
         display: flex;
         justify-content: center;
-        width: 430px;
+        width: 100%;
         margin-top: 30px;
-        margin-right: 20px;
+        margin-right: 1rem;
     }
 
     .review-page-create-btn {
-        width: 215px;
-        margin-left: 25px;
+        width: 40%;
+        margin-left: 1.5rem;
     }
 
     .review-page-filter {
         width: 215px;
         
+    }
+
+    .review-page-card-box {
+        /* background-color: white; */
+        border-radius: 10px;
+        width: 85%;
+        height: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }

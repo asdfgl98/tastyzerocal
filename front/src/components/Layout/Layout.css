@@ -6,6 +6,7 @@
     /* bottom: 0; */  
     padding: 30px;
     padding-bottom: 20px;
+    width: 100%;
     
 }
 
@@ -31,4 +32,18 @@
     font-size: 1.2rem;
     color: black;
     margin: 10px;
+}
+
+@media screen and (max-width: 430px) {
+    .main-name{
+        display: none;
+    }
+
+    .navBar {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-bottom: 1px solid #dee2e6;
+    }
 }

@@ -28,6 +28,7 @@
 @media screen and (max-width: 430px){
     .food-list-box{
         width: 430px;
+        width: 100%;
         height: 100%;
         font-size: 0.8rem;
         flex-direction: column;

@@ -94,7 +94,6 @@
     border-radius: 0.7rem;
     background-color: #E0475B;
     color: white;
-
 }
 
 .region-box > p {
@@ -153,7 +152,7 @@
 
 @media screen and (max-width: 430px){
     .modal-container {
-        width: 430px;
+        width: 100%;
         height: 30vh;
         /* background-color: skyblue; */
         /* border: 1px solid black; */
@@ -174,5 +173,15 @@
         
     }
 
+    .city-detail > button{
+        font-size: 0.8rem;
+        width: 50%;
+        margin-left: 0.8rem;
+        height: 20%;
+        text-align: left;
+        background-color: white;
+        border: none;
+        padding: 7px;
+    }
     
 }

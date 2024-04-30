@@ -9,7 +9,6 @@ import { dbAxios } from '../../model/axios';
 const Header:React.FC = () => {
     const dispatch = useAppDispatch()
     const data = useAppSelector((state)=>state.userData)
-    const navigator = useNavigate()
     const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
 
     /** 로그아웃 함수 */
@@ -34,16 +33,16 @@ const Header:React.FC = () => {
     <div className='header'>
         <div className='navBar'>
             <div>
-            <Link to={"/"} className="header-main">
-                <img
-                    alt=""
-                    src="/logo.ico"
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                    />{' '}
-                    맛있으면 0칼로리
-                    </Link>
+                <Link to={"/"} className="header-main">
+                    <img
+                        alt=""
+                        src="/logo.ico"
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                        />{' '}
+                        <span className='main-name'>맛있으면 0칼로리</span>
+                </Link>
             </div>
             <div>
                 <Link to={"/review"} className="header-link">리뷰 게시판</Link>
@@ -53,10 +52,10 @@ const Header:React.FC = () => {
                     {data.name === "" ? 
                     <Link to={"/user"} className="header-link">로그인</Link>
                     :
-                    <>
+                    <div>
                     <Link to={"/mypage"} className="header-link" >{data.name} 님</Link>
                     <Link to={"/"} className="header-link" onClick={userlogOut}>로그아웃</Link>
-                    </>
+                    </div>
                     }
                 </div>
             </div>

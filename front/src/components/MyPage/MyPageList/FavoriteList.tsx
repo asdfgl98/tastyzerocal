@@ -15,9 +15,11 @@ const FavoriteList:React.FC<OwnProp> = ({userDataList, setUserDataList}) => {
 
   return (
     <div className='mypage-list-container'>
+      <div className='mypage-list-card-box'>
       {userDataList?.favoriteList?.map((item)=>(
         <FoodCard key={item.id} item={item} setClickDetailTap={setUserData} isMyPage={true}/>
       ))}
+      </div>
     </div>
   )
 }

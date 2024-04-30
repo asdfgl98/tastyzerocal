@@ -38,21 +38,11 @@
     /* background-color: black; */
 }
 
-@media screen and (max-width: 430px){
-    .login-container {
-        margin-top: 3rem;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: center; */
-        width: 350px;
-        height: 100%;
-        /* background-color: black; */
-    }
-}
+
 
 
 .login-container > input{
-    height: 8%;
+    height: 40px;
     margin-bottom: 1rem;
     border: 1px solid gray;
     border-radius: 0.8rem;
@@ -62,7 +52,7 @@
 }
 
 .login-container > button{
-    height: 8%;
+    height: 40px;
     margin-top: 0.5rem;
     border: 1px solid gray;
     border-radius: 0.8rem;
@@ -89,19 +79,29 @@
     cursor: pointer;
 }
 
+@media screen and (max-width: 430px){
+    .login-container {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        width: 350px;
+        height: 100%;
+        /* background-color: black; */
+    }
+}
+
 /* Join Component */
 
 .join-container{
     /* padding-top: 1rem; */
-    width: 40%;
-    height: 90vh;
-    background-color: pink;
+    max-width: 800px;
+    width: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 100px;
-    
+    margin-bottom: 100px;    
 }
 
 .join-box {
@@ -256,7 +256,7 @@
 }
 
 .button-box > button {
-    height: 45%;
+    height: 40px;
     width: 100%;
     margin-top: 0.5rem;
     border: 1px solid gray;
@@ -266,4 +266,18 @@
     font-weight: bold;
 }
 
+@media screen and (max-width: 430px){
+    .join-container{
+        width: 430px;  
+    }
+
+    .join-form {
+        width: 80%;
+    }
+
+    .button-box > button {
+        height: 50px;
+
+    }
+}
 

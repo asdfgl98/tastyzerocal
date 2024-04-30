@@ -5,10 +5,11 @@
     align-items: center;
     /* background-color: hsl(240, 100%, 50%); */
     /* background-color: #F8F9FA; */
-    height: 20vh;
+    /* height: 20vh; */
     overflow: hidden;
     margin-top: 50px;
     margin-bottom: 25px;
+    padding-bottom: 10px;
 
 }
 

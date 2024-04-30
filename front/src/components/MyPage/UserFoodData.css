@@ -21,10 +21,10 @@
 }
 
 .food-data-click {
-    color: black;
+    color: white;
     font-weight: bold;
     height: 100%;
-    background-color: #c2e7ff;
+    background-color: #198754;
     /* border-left: 1px solid black; */
     /* border-Right: 1px solid black; */
 }

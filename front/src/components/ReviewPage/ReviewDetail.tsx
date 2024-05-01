@@ -112,7 +112,7 @@ const ReviewDetail = () => {
                 <div className='review-detial-comment-form'>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>리뷰에 대한 댓글을 남겨보세요!</Form.Label>
+                            <Form.Label>리뷰에 대한 댓글을 남겨보세요😋</Form.Label>
                             <div style={{display: "flex"}}>
                                 <Form.Control as="textarea" rows={3} onChange={(e)=>changeComment(e)} ref={commentRef}/>
                                 <Button className='comment-btn' onClick={()=>clickWrite()} variant="success">작성하기</Button>

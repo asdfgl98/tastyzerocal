@@ -21,7 +21,7 @@ services:
       - "3001:3001"
     env_file:
     #   - ./back/server/config/.env.prod
-      - ./docker-config/apiserver-config/.env.prod
+      - ./docker-config/.env.apiserver
   dbserver:
     container_name: dbserver
     
@@ -33,4 +33,4 @@ services:
       - "3002:3002"
     env_file:
     #   - ./back/server_DB/config/.env.prod
-      - ./docker-config/dbserver-config/.env.prod   
+      - ./docker-config/.env.dbserver

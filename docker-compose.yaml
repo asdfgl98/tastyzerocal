@@ -33,16 +33,4 @@ services:
       - "3002:3002"
     env_file:
     #   - ./back/server_DB/config/.env.prod
-      - ./docker-config/dbserver-config/.env.prod
-  jenkins-server:
-    container_name: jenkins-server
-    image: jenkins/jenkins:lts-jdk17
-    ports:
-      - "8080:8080"
-    user: root
-    volumes:
-      - ./jenkins:/var/jenkins_home
-
-
-volumes:
-  jenkins:
+      - ./docker-config/dbserver-config/.env.prod   

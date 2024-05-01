@@ -1,3 +1,5 @@
 /.vscode
 /docker-config
 /jenkins
+/docker-compose.jenkins.yaml
+Dockerfile.jenkins

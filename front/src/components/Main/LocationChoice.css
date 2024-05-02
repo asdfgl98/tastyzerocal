@@ -36,18 +36,35 @@
 
 }
 
+.headline1 {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
 @media screen and (max-width: 844px){
     .location-button {
         color: white;
         padding: 0;
         font-size: 0.9rem;
-        width: 12em;
+        width: 45%;
         height: 3.2em;
         margin-left: 0.5rem;
         margin-right: 0.5rem;
         margin-bottom: 0.05rem;
         box-shadow: 3px 3px 3px black;
-        overflow: hidden; 
+    }
+
+    .location-box {
+        width: 100%;
+    
+    }
+
+    .location-button-box {
+        width: 100%;
+    }
+
+    .headline1 {
+        font-size: 1.5rem;
     }
 }
 
@@ -59,7 +76,3 @@
     color: #E0475B
 }
 
-.headline1 {
-    font-weight: bold;
-    font-size: 2rem;
-}

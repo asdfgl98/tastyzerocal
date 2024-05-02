@@ -27,7 +27,7 @@ export class ReviewsController {
     @Req() req: any
   ){
     const imageUrl = await this.reviewsService.deleteReview(postId, req.user.id)
-    const deleteImageToS3 = await this.awsServeice.imageDeleteToS3(imageUrl)
+    this.awsServeice.imageDeleteToS3(imageUrl)
     await this.usersService.reviewListUpdate(true, req.user.id, postId)
     return true
   }

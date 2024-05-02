@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import "./reviewModal.css"
+import "./CreateReview.css"
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
@@ -20,8 +20,8 @@ interface OwnProp {
 
 
 
-const foodType = ["한식", "양식", "일식", "중식", "분식", "디저트", "패스트 푸드", "면류", "튀김류","고기", "찜/탕/찌개", "햄버거", "치킨"]
-const foodTag = ["매운", "달콤한", "시원한", "따듯한", "얼큰한", "새콤한", "고소한", "맛집", "기념일", "오마카세", "상견례", "데이트", "소개팅", "가족식사", "부모님", "회식", "술안주", "해장", "이자카야", "혼밥", "분위기 좋은"]
+const foodType = ["한식", "양식", "일식", "중식", "분식","면류", "치킨" ,"고기","디저트", "튀김류", "햄버거","패스트 푸드",   "찜/탕/찌개"]
+const foodTag = ["매운","맛집","혼밥","회식", "해장","달콤한", "시원한", "따듯한", "얼큰한", "새콤한", "고소한",  "기념일",  "상견례", "데이트", "소개팅", "부모님",  "술안주",  "이자카야","가족식사", "오마카세",  "분위기 좋은"]
 
 const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
   const open = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js")
@@ -261,6 +261,8 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
                         <Button key={idx} variant="warning" name="tag" onClick={(e)=>clickTag(e, item, reviewTag, setReviewTag)} className='food-type-btn'>{item}</Button>
                     ))}
                 </div>
+              </div>
+              <div>
                 <h4>내용</h4>
                 <div className='review-create-textarea'>
                     <ReactQuill 
@@ -271,11 +273,11 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
                     
                     />
                 </div>
-                <div className='review-create-btn-box'>
+              </div>
+              <div className='review-create-btn-box'>
                 <Button variant="primary" onClick={()=>clickCreateReview()}>리뷰 작성하기</Button>
                 <Button variant="primary" onClick={() => closeModal()}>취소</Button>
-                </div>
-            </div>
+              </div>            
           </div>
         </Modal.Body>
       </Modal>

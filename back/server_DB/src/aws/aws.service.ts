@@ -42,7 +42,6 @@ export class AwsService {
 
     async imageDeleteToS3(url: string){
         const fileName = url.split('/')[1]
-        console.log(fileName)
         const command =  new DeleteObjectCommand({
             Bucket: this.configService.get("AWS_BUCKET_NAME"),
             Key: fileName,

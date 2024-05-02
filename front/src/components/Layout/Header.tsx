@@ -32,7 +32,7 @@ const Header:React.FC = () => {
   return (
     <div className='header'>
         <div className='navBar'>
-            <div>
+            <div className='header-item'>
                 <Link to={"/"} className="header-main">
                     <img
                         alt=""
@@ -44,11 +44,11 @@ const Header:React.FC = () => {
                         <span className='main-name'>맛있으면 0칼로리</span>
                 </Link>
             </div>
-            <div>
+            <div className='header-item'>
                 <Link to={"/review"} className="header-link">리뷰 게시판</Link>
             </div>
             <div>
-                <div>
+                <div className='header-item'>
                     {data.name === "" ? 
                     <Link to={"/user"} className="header-link">로그인</Link>
                     :

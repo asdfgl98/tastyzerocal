@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "./modal.css"
+import "./OtherRegionModal.css"
 import { RegionState } from '../../model/types'
 import { searchStore } from '../Main/FoodDetailSearch'
 import { useAppDispatch } from '../../Store/hooks/hooks'

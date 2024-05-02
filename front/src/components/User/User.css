@@ -1,8 +1,8 @@
 /* Login Component */
 .user-container {
     background-color: white;
-    height: auto;
-    /* min-height: 90vh; */
+    height: 91vh;
+    margin-bottom: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,6 +26,9 @@
 .login-coment {
     border-top: 1px solid black;
     padding-top: 1.5rem;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
 }
 
 .login-container {
@@ -88,6 +91,10 @@
         width: 350px;
         height: 100%;
         /* background-color: black; */
+    }
+
+    .login-coment {
+        font-size: 14px;
     }
 }
 

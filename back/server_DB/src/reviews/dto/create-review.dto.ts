@@ -17,9 +17,9 @@ export class CreateReviewDTO {
     @IsString()
     content: string
 
-    @IsString()
+    @IsArray()
     @IsOptional()
-    image: string
+    image: string[]
 
     
 }

@@ -33,7 +33,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
     const [reviewCategory, setReviewCategory] = useState<string[]>([])
     const [reviewTag, setReviewTag] = useState<string[]>([])
     const [content, setContent] = useState<string>("")
-    const [imageUrl, setImageUrl] = useState<string>("")
+    const [imageUrl, setImageUrl] = useState<string[]>([])
     const directPlaceNameRef = useRef<HTMLInputElement>(null)
     const directRoadAddressNameRef = useRef<HTMLInputElement>(null)
     const directPhoneRef = useRef<HTMLInputElement>(null)
@@ -68,8 +68,8 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
           const imgUrl = `${process.env.REACT_APP_DB_SERVER}/public-img/reviews/${response.data}`
           // 에디터 커서에 서버에 저장된 이미지 삽입
           quillObj.insertEmbed(range.index, "image", imgUrl)
-          setImageUrl(response.data)
-
+          setImageUrl(prevList => [...prevList, response.data])
+            
         } catch(err){
           console.error('이미지 업로드 에러 발생', err)
         }
@@ -99,6 +99,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         setReviewCategory([])
         setReviewTag([])
         setContent("")
+        setImageUrl([])
       }
     }
 
@@ -116,7 +117,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         Object.keys(reviewData.store).length !==0 &&
         reviewData.content !== ""
       ){
-        console.log(reviewData)
+
         createReview(reviewData, accessToken)
       }
       else{

@@ -31,7 +31,7 @@ export class Review {
     content: string
 
     @Prop()
-    image: string
+    image: string[]
 
     @Prop({
         type: mongoose.Schema.Types.ObjectId,

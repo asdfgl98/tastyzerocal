@@ -18,42 +18,49 @@ export class AwsService {
         })
     }
 
-    async imageUploadToS3(fileName: string){
-        const filePath = path.join(REVIEWS_IMAGE_PATH, fileName)
-        const imageFile =  fs.readFileSync(filePath)
-        const imageType = fileName.split(".")[1]
+    async imageUploadToS3(fileName: string[]){
+        let imageList = []
+        for(let i=0; i< fileName.length; i++){
+            const filePath = path.join(REVIEWS_IMAGE_PATH, fileName[i])
+            const imageFile =  fs.readFileSync(filePath)
+            const imageType = fileName[i].split(".")[1]
 
-        const command = new PutObjectCommand({
-            Bucket: this.configService.get("AWS_BUCKET_NAME"),
-            Key: fileName,
-            Body: imageFile,
-            ContentType: `image/${imageType}`
-        })
+            const command = new PutObjectCommand({
+                Bucket: this.configService.get("AWS_BUCKET_NAME"),
+                Key: fileName[i],
+                Body: imageFile,
+                ContentType: `image/${imageType}`
+            })
 
-        try{
-            const upload = await this.s3.send(command)
-            return `${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName}`
+            try{
+                const upload = await this.s3.send(command)
+                imageList.push(`${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName[i]}`)
 
-        } catch(err){
-            console.log('imageUploadToS3 : s3 업로드 에러', err)
-            throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+            } catch(err){
+                console.log('imageUploadToS3 : s3 업로드 에러', err)
+                throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+            }
         }
+
+        return imageList
     }
 
-    async imageDeleteToS3(url: string){
-        const fileName = url.split('/')[1]
-        const command =  new DeleteObjectCommand({
-            Bucket: this.configService.get("AWS_BUCKET_NAME"),
-            Key: fileName,
-        })
-
-        try{
-            const deleteImage = await this.s3.send(command)
-            return true
-        } catch(err){
-            console.error("imageDeleteToS3 : s3 이미지 삭제 에러", err)
-            throw new BadRequestException("imageDeleteToS3 : s3 이미지 삭제 에러")
+    async imageDeleteToS3(url: string[]){
+        for(let i=0; i< url.length; i++){
+            const fileName = url[i].split('/')[1]
+            const command =  new DeleteObjectCommand({
+                Bucket: this.configService.get("AWS_BUCKET_NAME"),
+                Key: fileName,
+            })
+    
+            try{
+                const deleteImage = await this.s3.send(command)
+            } catch(err){
+                console.error("imageDeleteToS3 : s3 이미지 삭제 에러", err)
+                throw new BadRequestException("imageDeleteToS3 : s3 이미지 삭제 에러")
+            }
         }
+        return true
 
     }
 

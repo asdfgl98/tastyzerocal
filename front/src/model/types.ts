@@ -70,18 +70,12 @@ export interface ReviewData {
     category: string[]
     tag : string[]
     content: string
-    image: string
+    image: string[]
   }
 
 /** 리뷰 데이터 불러오기 타입 */
 export interface AllReviewData extends ReviewData {
-    _id: string
-    title: string
-    store: MapInfoState
-    category: string[]
-    tag : string[]
-    content: string
-    image: string
+    _id: string    
     createBy: {
         id: string,
         name: string

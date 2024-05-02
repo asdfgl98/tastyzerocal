@@ -15,7 +15,7 @@ export class ReviewsService {
     ){}
 
     /**리뷰 생성 Model */
-    async createReview(createReview: CreateReviewDTO, s3ImageUrl:string, _id: string){
+    async createReview(createReview: CreateReviewDTO, s3ImageUrl:string[], _id: string){
         const data = {...createReview, image:s3ImageUrl, createBy: _id}
 
         const result = await this.ReviewModel.create(data)

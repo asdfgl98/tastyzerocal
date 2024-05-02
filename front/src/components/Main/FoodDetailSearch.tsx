@@ -12,9 +12,9 @@ export const searchStore = async(searchWord: string, dispatch: any)=>{
     dispatch(changeLocation({lat: Number(response.data.documents[0].y), lng: Number(response.data.documents[0].x)}))
     dispatch(changeRegionName(response.data.documents[0].address_name.split(" ")[0]))
     dispatch(setMapInfo(response.data.documents))
-
-  } catch (err) {
+  } catch (err) {    
     console.error("kakaoMap Searching Error", err)
+    dispatch(setMapInfo([]))
   }
 }
 

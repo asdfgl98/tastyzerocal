@@ -64,8 +64,14 @@
     display: flex;
 }
 
+.direct-input > button{
+    margin-bottom: 15px;
+    width: 250px
+}
+
 .mb-3 {
     margin-left: 10px;
+    width: 100%
 }
 
 @media screen and (max-width: 430px){
@@ -81,6 +87,7 @@
     }
     .direct-input > button{
         margin-bottom: 15px;
+        width: 100%;
     }
     
     .food-type-btn {

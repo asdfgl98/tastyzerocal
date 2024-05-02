@@ -6,6 +6,7 @@ import { extname } from 'path';
 import * as multer from 'multer';
 import { REVIEWS_IMAGE_PATH } from './const/path.const';
 import {v4 as uuid} from 'uuid'
+import * as fs from 'fs'
 
 @Module({
   imports:[
@@ -28,6 +29,11 @@ import {v4 as uuid} from 'uuid'
       },
       storage: multer.diskStorage({
         destination: function(req, res, cb){
+          //폴더없으면 폴더 생성
+        if (!fs.existsSync(REVIEWS_IMAGE_PATH)) {
+          fs.mkdirSync(REVIEWS_IMAGE_PATH, { recursive: true });
+        }
+
           cb(null, REVIEWS_IMAGE_PATH)
         },
         filename: function(req, file, cb){

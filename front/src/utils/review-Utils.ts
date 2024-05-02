@@ -77,7 +77,6 @@ export const deleteReview = async(postId: string, accessToken: string)=>{
     alert("로그인이 필요한 서비스 입니다.")
     return;
   }
-  console.log(postId)
   try{
     const {data} = await dbAxios.delete('/reviews', {
       headers: {

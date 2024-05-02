@@ -6,6 +6,7 @@ import { Review, ReviewSchema } from './schema/review.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { UsersModule } from 'src/users/users.module';
 import { Comment, CommentSchema } from './schema/comment.schema';
+import { AwsModule } from 'src/aws/aws.module';
 
 
 @Module({
@@ -20,7 +21,8 @@ import { Comment, CommentSchema } from './schema/comment.schema';
   }
 ]),
   forwardRef(()=>AuthModule),
-  forwardRef(()=>UsersModule)
+  forwardRef(()=>UsersModule),
+  AwsModule
    
 ],
   exports:[ReviewsService],

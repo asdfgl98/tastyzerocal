@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs'
@@ -38,6 +38,24 @@ export class AwsService {
             console.log('imageUploadToS3 : s3 업로드 에러', err)
             throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
         }
+    }
+
+    async imageDeleteToS3(url: string){
+        const fileName = url.split('/')[1]
+        console.log(fileName)
+        const command =  new DeleteObjectCommand({
+            Bucket: this.configService.get("AWS_BUCKET_NAME"),
+            Key: fileName,
+        })
+
+        try{
+            const deleteImage = await this.s3.send(command)
+            return true
+        } catch(err){
+            console.error("imageDeleteToS3 : s3 이미지 삭제 에러", err)
+            throw new BadRequestException("imageDeleteToS3 : s3 이미지 삭제 에러")
+        }
+
     }
 
 

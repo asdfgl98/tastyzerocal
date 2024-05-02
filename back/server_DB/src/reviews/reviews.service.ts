@@ -53,7 +53,7 @@ export class ReviewsService {
             throw new BadRequestException("deleteReview : 리뷰 삭제중 오류가 발생했습니다.")
         })
 
-        return true
+        return find.image
 
         
     }

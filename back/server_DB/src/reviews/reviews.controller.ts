@@ -4,12 +4,14 @@ import { AccessTokenGuard, BearerTokenGuard } from 'src/guard/bearer-token.guard
 import { WriteCommentDTO } from './dto/write-comment.dto';
 import { String } from 'aws-sdk/clients/batch';
 import { UsersService } from 'src/users/users.service';
+import { AwsService } from 'src/aws/aws.service';
 
 @Controller('reviews')
 export class ReviewsController {
   constructor(
     private readonly reviewsService: ReviewsService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly awsServeice: AwsService
   ) {}
 
   /**모든 리뷰 조회 */
@@ -24,7 +26,8 @@ export class ReviewsController {
     @Query('postId') postId: string,
     @Req() req: any
   ){
-    await this.reviewsService.deleteReview(postId, req.user.id)
+    const imageUrl = await this.reviewsService.deleteReview(postId, req.user.id)
+    const deleteImageToS3 = await this.awsServeice.imageDeleteToS3(imageUrl)
     await this.usersService.reviewListUpdate(true, req.user.id, postId)
     return true
   }

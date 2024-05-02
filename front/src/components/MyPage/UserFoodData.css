@@ -33,3 +33,13 @@
     height: 90%;
     width: 100%;
 }
+
+@media screen and (max-width: 430px) {
+    .food-data-tap > div {
+        font-size: 1.2rem;
+        width: 100%;
+        margin: 0px;
+    }
+    .food-data-click {
+    }
+}

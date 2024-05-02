@@ -251,14 +251,24 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
                 <span style={{margin: "5px"}}>최대 3개 선택 가능</span>
                 <div className='food-type'>
                     {foodType.map((item, idx)=>(
-                        <Button key={idx} variant="warning" name="category" onClick={(e)=>clickCategory(e, item,reviewCategory, setReviewCategory)} className='food-type-btn'>{item}</Button>
+                        <button 
+                          key={idx} 
+                          name="category" 
+                          className='food-type-btn'
+                          onClick={(e)=>{clickCategory(e, item,reviewCategory, setReviewCategory)}} 
+                        >{item}</button>
                     ))}
                 </div>
                 <h4>태그</h4>
                 <span style={{margin: "5px"}}>최대 10개 선택 가능</span>
                 <div className='food-type'>
                     {foodTag.map((item, idx)=>(
-                        <Button key={idx} variant="warning" name="tag" onClick={(e)=>clickTag(e, item, reviewTag, setReviewTag)} className='food-type-btn'>{item}</Button>
+                        <button 
+                          key={idx} 
+                          name="tag" 
+                          className='food-type-btn'
+                          onClick={(e)=>clickTag(e, item, reviewTag, setReviewTag)} 
+                          >{item}</button>
                     ))}
                 </div>
               </div>

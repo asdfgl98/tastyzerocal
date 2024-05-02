@@ -3,7 +3,7 @@ import { ReviewData, WriteComment } from "../model/types"
 
 /** review 카테고리 선택 함수 */
 export const clickCategory = (e:any ,item: string, reviewCategory:string[], setReviewCategory: any)=>{
-    const btn = e.target
+    let btn = e.target
     const checkCategory = reviewCategory.includes(item)    
     if(btn.name === "category"){
       if(checkCategory){

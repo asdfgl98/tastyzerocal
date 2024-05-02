@@ -26,6 +26,10 @@
     margin-right: 15px;
     margin-bottom: 15px;
     font-weight: bold;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .click-btn {

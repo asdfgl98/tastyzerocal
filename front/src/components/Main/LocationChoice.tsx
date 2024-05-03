@@ -38,7 +38,7 @@ const LocationChoice:React.FC<OwnProp> = ({ ORModal, setORModal}) => {
         </div>
         <div className='location-button-box'>
             <button className="location-button" onClick={()=>setORModal(!ORModal)}>다른 지역 맛집 찾아보기</button>
-            <button className="location-button" onClick={getLocation}>내 주변 맛집 찾아보기</button>
+            <button className="location-button" onClick={()=>getLocation()}>내 주변 맛집 찾아보기</button>
         </div>
     
     </div>

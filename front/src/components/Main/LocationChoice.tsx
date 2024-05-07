@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './LocationChoice.css'
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks'
 import { changeKeyword, changeLocation } from '../../Store/reducer/mapInfoSlice'

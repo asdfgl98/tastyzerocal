@@ -44,7 +44,6 @@ const App:React.FC = ()=> {
         <Route element={<PrivateRoute authentication={false} accessToken={accessToken}/>}>
           <Route path="/user" element={<User/>}></Route>
         </Route>
-
         <Route element={<PrivateRoute authentication={true} accessToken={accessToken}/>}>
           <Route path="/mypage" element={<MyPage/>}></Route>
         </Route>

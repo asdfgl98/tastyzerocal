@@ -33,7 +33,6 @@ services:
     ports:
       - "3001:3001"
     env_file:
-    #   - ./back/server/config/.env.prod
       - ./docker-config/.env.apiserver
   dbserver:
     container_name: dbserver
@@ -45,5 +44,4 @@ services:
     ports:
       - "3002:3002"
     env_file:
-    #   - ./back/server_DB/config/.env.prod
       - ./docker-config/.env.dbserver

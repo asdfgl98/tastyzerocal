@@ -2,9 +2,6 @@ version: "3.8"
 services:
   nginx:
     container_name: nginx
-    build:
-      context: ./front
-      dockerfile: Dockerfile.prod
     image: dockerjihun/tzc-front:latest
     ports:
       - "80:80"
@@ -26,9 +23,6 @@ services:
     entrypoint : "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   apiserver:
     container_name: apiserver
-    build:
-      context: ./back/server_API
-      dockerfile: Dockerfile.prod
     image: dockerjihun/tzc-apiserver:latest
     ports:
       - "3001:3001"
@@ -37,10 +31,6 @@ services:
       - ./docker-config/.env.apiserver
   dbserver:
     container_name: dbserver
-    
-    build:
-      context: ./back/server_DB
-      dockerfile: Dockerfile.prod
     image: dockerjihun/tzc-dbserver:latest
     ports:
       - "3002:3002"

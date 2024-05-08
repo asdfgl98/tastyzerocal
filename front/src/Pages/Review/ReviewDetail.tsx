@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import { AllReviewData, CommentData, WriteComment } from '../../model/types'
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
-import ImageSlide from './ImageSlide';
+import ImageSlide from '../../components/ReviewPage/ImageSlide';
 import DOMPurify from 'dompurify';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';

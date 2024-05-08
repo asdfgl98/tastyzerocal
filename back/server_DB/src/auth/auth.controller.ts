@@ -9,17 +9,46 @@ import { BearerTokenGuard} from 'src/guard/bearer-token.guard';
 import { CookieTokenGuard } from 'src/guard/Cookie-token.guard';
 import { HttpExceptionFilter } from 'src/exception-filter/http.exception-filter';
 import { tokenCreateForCookies, tokenDeleteToCookies } from 'src/Utils/JWT-Utils';
+import { ApiBasicAuth, ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 
 @Controller('auth')
+@ApiTags('auth contoller')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService
   ) {}
 
+  /** 일반 회원가입 엔드포인트 */
+  @Post('join')
+  @ApiOperation({summary: '일반 회원가입', description: '일반 회원가입을 진행합니다.'})
+  @ApiCreatedResponse({description: 'accessToken | refreshToken'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  async joinWithId
+  (@Body() createUserDto: CreateUserDto,
+  @Res() res: Response
+  ){
+    const result = await this.authService.Join(createUserDto)
+    tokenCreateForCookies(res, 'refresh_token', result)    
+  }
+
+  /** 소셜 회원가입 엔드포인트*/
+  @Post('social-join')
+  @ApiOperation({summary: '소셜 회원가입', description: '소셜 회원가입을 진행합니다.'})
+  @ApiCreatedResponse({description: 'accessToken | refreshToken'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  async joinWithSocial(@Body() createSocialDTO: CreateUserDto){
+    return await this.authService.Join(createSocialDTO)
+  }
+
   /** access 토큰 재발급 엔드포인트 */
   @Post('token/access')
+  @ApiOperation({summary: '엑세스 토큰 재발급', description: '리프레시 토큰으로 엑세스 토큰을 재발급 받습니다.'})
+  @ApiCreatedResponse({description: 'new accessToken'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(CookieTokenGuard)
   @UseFilters(HttpExceptionFilter)
    async tokenAccess(@Request() req:any){
@@ -33,6 +62,11 @@ export class AuthController {
 
   /** 토큰으로 회원정보 요청 엔드포인트 */
   @Get('/userInfo')
+  @ApiOperation({summary: '회원정보 조회', description: '엑세스 토큰으로 회원정보를 조회합니다.'})
+  @ApiOkResponse({description: 'user data'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   async userInfo(
     @Request() req: any
@@ -55,6 +89,11 @@ export class AuthController {
 
   /** 일반 로그인 엔드포인트 */
   @Post('login')
+  @ApiOperation({summary: '일반 로그인', description: '일반 로그인을 진행합니다.'})
+  @ApiCreatedResponse({description: 'accessToken | refreshToken'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBasicAuth()
   @UseGuards(BasicTokenGuard)
    async loginId(
     @User() user: {id: string, password: string},
@@ -66,6 +105,11 @@ export class AuthController {
 
   /** 로그아웃 엔드포인트*/
   @Post('logout')
+  @ApiOperation({summary: '로그아웃', description: '로그아웃을 진행합니다.'})
+  @ApiCreatedResponse({description: 'true'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   async logout(@Res() res:Response){
     tokenDeleteToCookies(res, "refresh_token")    
@@ -75,21 +119,7 @@ export class AuthController {
     })
   }
 
-  /** 일반 회원가입 엔드포인트 */
-  @Post('join')
-  async joinWithId
-  (@Body() createUserDto: CreateUserDto,
-  @Res() res: Response
-  ){
-    const result = await this.authService.Join(createUserDto)
-    tokenCreateForCookies(res, 'refresh_token', result)    
-  }
-
-  /** 소셜 회원가입 엔드포인트*/
-  @Post('social-join')
-  async joinWithSocial(@Body() createSocialDTO: CreateUserDto){
-    return await this.authService.Join(createSocialDTO)
-  }
+  
 
   
 

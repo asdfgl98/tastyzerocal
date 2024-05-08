@@ -85,7 +85,7 @@ export class UsersService {
     }
   )
   if(!response.acknowledged){
-    throw new NotFoundException();
+    throw new BadRequestException("update : 회원정보 수정 에러")
   } 
     return response.acknowledged;
   }

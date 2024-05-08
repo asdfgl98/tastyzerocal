@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import "./myPageList.css"
-import Card from 'react-bootstrap/Card';
 import { userDataList } from '../../../model/types';
 import FoodCard from '../../Main/FoodCard';
 

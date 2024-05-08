@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./ReviewPage.css"
-import ReviewCard from './ReviewCard'
+import ReviewCard from '../../components/ReviewPage/ReviewCard'
 import Button from 'react-bootstrap/Button';
-import CreateReview from '../Modal/CreateReview';
+import CreateReview from '../../components/Modal/CreateReview';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 import { setMapInfo } from '../../Store/reducer/mapInfoSlice';
 import { dbAxios } from '../../model/axios';

@@ -58,10 +58,7 @@ export class ReviewsService {
         
     }
 
-    async getReviewDataWithId(id: string){
-        const result = await this.ReviewModel.findById(id)
-        console.log(result)
-    }
+
 
     async getComments (postId: string){
         const result = await this.ReviewModel.findById(postId,{
@@ -76,6 +73,10 @@ export class ReviewsService {
             title: false,
             updatedAt: false
         })
+        if(!result){
+            throw new BadRequestException('getComments : 리뷰 불러오기 쿼리 오류 발생')
+        }
+
         return result.comments
     }
 

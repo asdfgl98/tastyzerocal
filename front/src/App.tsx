@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/Layout/Header';
-import MainPage from './components/Main/MainPage';
+import MainPage from './Pages/Main/MainPage';
 import { Route, Routes } from 'react-router-dom';
-import User from './components/User/User';
-import MyPage from './components/MyPage/MyPage';
+import User from './Pages/User/User';
+import MyPage from './Pages/MyPage/MyPage';
 import { getAccessTokenWithRefreshToken, getUserDataWithToken } from './utils/JWT-Utils';
 import { useAppDispatch, useAppSelector } from './Store/hooks/hooks';
-import ReviewPage from './components/ReviewPage/ReviewPage';
-import ReviewDetail from './components/ReviewPage/ReviewDetail';
+import ReviewPage from './Pages/Review/ReviewPage';
+import ReviewDetail from './Pages/Review/ReviewDetail';
 import PrivateRoute from './utils/PrivateRoute-Utils';
 
 

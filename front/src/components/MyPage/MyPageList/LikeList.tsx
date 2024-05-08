@@ -10,10 +10,6 @@ interface OwnProp {
 
 const LikeList:React.FC<OwnProp> = ({userDataList, setUserDataList}) => {
 
-
-  useEffect(()=>{
-    console.log(userDataList)
-  },[userDataList])
   return (
     <div className='mypage-list-container'>
       <div className='mypage-list-card-box'>

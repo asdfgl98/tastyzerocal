@@ -8,7 +8,7 @@ import { faEye, faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-i
 import { useNavigate } from 'react-router-dom';
 import { dbAxios } from '../../model/axios';
 import { likeCount } from '../../utils/review-Utils';
-import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
+import { useAppSelector } from '../../Store/hooks/hooks';
 
 interface OwnProp {
   data: AllReviewData
@@ -42,7 +42,6 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
   }
 
   useEffect(()=>{
-    console.log(userId)
     if(data.likeCount.includes(userId)){
       setCheckLike(true)
     }

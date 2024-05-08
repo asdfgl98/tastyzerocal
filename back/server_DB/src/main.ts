@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import * as fs from 'fs'
 import { REVIEWS_IMAGE_PATH } from './common/const/path.const';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as expressBasicAuth from 'express-basic-auth';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -23,12 +25,40 @@ async function bootstrap() {
       }
     })
   )
-
   app.use(cookieParser())
+  app.use(
+    ['/api-description'],
+    expressBasicAuth({
+      challenge: true,
+      users: {
+        [process.env.SWAGGER_ID]: process.env.SWAGGER_PASSWORD
+      }
+    })
+  )
+
+
+  const config = new DocumentBuilder()
+    .setTitle('tzc DB Server')
+    .setDescription('tzc DB Server API description')
+    .setVersion('1.0')
+    .addTag('tzc DB')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'JWT',
+      in: 'header',
+    },)
+    .build()
+  
+    const document = SwaggerModule.createDocument(app, config)
+    SwaggerModule.setup('api-description', app, document)
+
 
   await app.listen(process.env.PORT, ()=>{
     // 1주일에 한 번 실행되는 주기 (밀리초 단위)
     const oneWeek = 7 * 24 * 60 * 60 * 1000;
+    // 이미지 폴더 초기화
     setInterval(()=>{
       fs.rm(REVIEWS_IMAGE_PATH,{recursive: true}, (err)=>{
         if(!err){

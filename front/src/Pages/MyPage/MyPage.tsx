@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./MyPage.css"
 import { useAppSelector } from '../../Store/hooks/hooks'
-import UserFoodData from './UserFoodData'
-import UserEdit from './UserEdit'
-import { getUserDataList } from '../../utils/user-Utils'
-import { userDataList } from '../../model/types'
-import { Route, Routes, useNavigate } from 'react-router-dom'
-
-
+import UserFoodData from '../../components/MyPage/UserFoodData'
+import UserEdit from '../../components/MyPage/UserEdit'
 
 const MyPage = () => {
     const userData = useAppSelector((state)=>state.userData)  

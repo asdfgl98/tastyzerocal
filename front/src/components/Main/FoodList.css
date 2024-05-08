@@ -2,20 +2,22 @@
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    /* align-items: center; */
+    align-items: center;
     /* background-color: pink; */
     height: 100vh;
     margin-top: 1rem;
+    width: 100%;
+    
     
 
 }
 
 .food-list-box {
-    display: flex;
-    
+    display: flex;    
     /* justify-content: center; */
-    /* flex-basis: 50%; */    
-    width: 1400px;
+    /* flex-basis: 50%; */
+    width: 100%;    
+    max-width: 1400px;
     height: 80%;
     /* background-color: black; */
     /* margin-top: 0.5rem; */
@@ -27,7 +29,7 @@
 
 @media screen and (max-width: 430px){
     .food-list-box{
-        width: 430px;
+        /* width: 430px; */
         width: 100%;
         height: 100%;
         font-size: 0.8rem;

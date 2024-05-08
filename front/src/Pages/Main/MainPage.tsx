@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import LocationChoice from './LocationChoice'
+import LocationChoice from '../../components/Main/LocationChoice'
 import {RegionState} from '../../model/types'
-import FoodList from './FoodList';
+import FoodList from '../../components/Main/FoodList';
 import "./MainPage.css"
 import { dbAxios } from '../../model/axios';
-import OtherRegionModal from '../Modal/OtherRegionModal';
-import Footer from '../Layout/Footer';
+import OtherRegionModal from '../../components/Modal/OtherRegionModal';
+import Footer from '../../components/Layout/Footer';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks/hooks';
 import { kakaoCategorySearch } from '../../utils/kakao-Utils';
 

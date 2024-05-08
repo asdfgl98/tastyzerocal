@@ -73,6 +73,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         const range = quillObj?.getSelection()!;
         try{
           const response = await dbAxios.post('/common/image', formData)
+          console.log(response)
           // 이미지 스태틱 서빙 URL
           const imgUrl = `${process.env.REACT_APP_DB_SERVER}/public-img/reviews/${response.data}`
           // 에디터 커서에 서버에 저장된 이미지 삽입

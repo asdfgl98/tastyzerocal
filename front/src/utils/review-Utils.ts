@@ -57,7 +57,7 @@ export const createReview = async(reviewData: ReviewData, accessToken: string, s
     return;
   }
   try{
-    const response = await dbAxios.post('/users/review',reviewData,{
+    const response = await dbAxios.post('/reviews',reviewData,{
       headers: {
         "Authorization" : `Bearer ${accessToken}`
       }

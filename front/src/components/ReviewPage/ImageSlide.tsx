@@ -1,6 +1,5 @@
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel';
-import Image from 'react-bootstrap/Image';
 
 interface OwnProp {
     img: string[]

@@ -9,19 +9,20 @@ import { tokenDeleteToCookies } from 'src/Utils/JWT-Utils';
 import { Response } from 'express';
 import { CreateReviewDTO } from 'src/reviews/dto/create-review.dto';
 import { ReviewsService } from 'src/reviews/reviews.service';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { AwsService } from 'src/aws/aws.service';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('users controller')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly ReviewService: ReviewsService,
-    private readonly AwsService: AwsService
   ) {}
 
   /** 아이디 중복 검사 */
   @Get(':id')
+  @ApiOperation({summary: '아이디 중복 검사', description: '일반 회원가입 시 아이디 중복 검사를 합니다.'})
+  @ApiOkResponse({description: 'true | false'})
   async idDuplicateCheck(@Param('id') id: string){
     const checkId = await this.usersService.userCheck(id)
     if(checkId){
@@ -32,6 +33,11 @@ export class UsersController {
 
   /** 회원정보 업데이트 */
   @Patch(':id')
+  @ApiOperation({summary: '회원정보 업데이트', description: '회원 정보를 업데이트합니다.'})
+  @ApiOkResponse({description: 'true'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     
@@ -40,6 +46,11 @@ export class UsersController {
 
   /** 회원 탈퇴 */
   @Delete(':id')
+  @ApiOperation({summary: '회원 탈퇴', description: '회원 정보를 삭제합니다.'})
+  @ApiOkResponse({description: 'true'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   async remove(
     @Param('id') id: string,
@@ -57,6 +68,11 @@ export class UsersController {
 
   /** 즐겨찾기 추가 */
   @Post('favorite')
+  @ApiOperation({summary: '즐겨찾기 추가', description: '회원 정보에서 즐겨찾기를 추가합니다.'})
+  @ApiOkResponse({description: 'updated userData response'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   @UseFilters(HttpExceptionFilter)
   async addFavorite(
@@ -69,6 +85,11 @@ export class UsersController {
 
   /** 즐겨찾기 제거 */
   @Delete('favorite/:id')
+  @ApiOperation({summary: '즐겨찾기 제거', description: '회원 정보에서 즐겨찾기를 삭제합니다.'})
+  @ApiOkResponse({description: 'updated userData response'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   @UseFilters(HttpExceptionFilter)
   async deleteFavorite(
@@ -77,22 +98,14 @@ export class UsersController {
   ){
     return await this.usersService.deleteFavorite(id, req.user.id)    
   }
-
-  /**리뷰 생성 */
-  @Post('/review')
-  @UseGuards(BearerTokenGuard)
-  async createReview(
-    @Body() createReviewDto: CreateReviewDTO,
-    @Req() req: any,
-  ){
-    const {user} = req
-    const s3ImageUrl = await this.AwsService.imageUploadToS3(createReviewDto.image)
-    const reviewResult = await this.ReviewService.createReview(createReviewDto, s3ImageUrl, user._id)
-    const result = await this.usersService.reviewListUpdate(false ,user.id, reviewResult._id)
-    return result
-  }  
+ 
 
   @Get('/mydata/:id')
+  @ApiOperation({summary: 'MyPage 데이터 불러오기', description: 'MyPage에 필요한 유저 데이터를 불러옵니다.'})
+  @ApiOkResponse({description: 'userData'})
+  @ApiResponse({status:400, description: 'BadRequest'})
+  @ApiResponse({status:401, description: 'Unauthorized'})
+  @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
   async getUserDataList(@Param('id') id:string){
     return await this.usersService.getMyPageData(id)

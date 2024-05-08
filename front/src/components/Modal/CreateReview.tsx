@@ -12,12 +12,19 @@ import { clickCategory, clickTag, createReview } from '../../utils/review-Utils'
 import { MapInfoState, ReviewData } from '../../model/types';
 import { dbAxios } from '../../model/axios';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Spinners from '../Common/Spinners';
 
 interface OwnProp {
     showModal : boolean
     setShowModal(b: boolean) : void
 }
 
+interface imageList {
+  imageName: string,
+  s3Url : string
+}
 
 
 const foodType = ["한식", "양식", "일식", "중식", "분식","면류", "치킨" ,"고기","디저트", "튀김류", "햄버거","패스트 푸드",   "찜/탕/찌개"]
@@ -34,6 +41,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
     const [reviewTag, setReviewTag] = useState<string[]>([])
     const [content, setContent] = useState<string>("")
     const [imageUrl, setImageUrl] = useState<string[]>([])
+    const [imageList, setImageList] = useState<imageList[]>([])
     const directPlaceNameRef = useRef<HTMLInputElement>(null)
     const directRoadAddressNameRef = useRef<HTMLInputElement>(null)
     const directPhoneRef = useRef<HTMLInputElement>(null)
@@ -43,6 +51,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
       road_address_name: "",
       phone: ""
     })
+    const [isUpload, setIsUpload] = useState<boolean>(false)
     const quillRef = useRef<any>(null)  
 
     /** 이미지 서버로 저장 */
@@ -56,7 +65,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
       input.onchange = async()=>{
         const file = input.files ? input.files[0] : null;
         if(!file) return;
-        const formData = new FormData();
+        const formData = new FormData();        
         formData.append("image", file);
         /*에디터 정보를 가져온다.*/
         let quillObj = quillRef.current?.getEditor();
@@ -67,13 +76,31 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
           // 이미지 스태틱 서빙 URL
           const imgUrl = `${process.env.REACT_APP_DB_SERVER}/public-img/reviews/${response.data}`
           // 에디터 커서에 서버에 저장된 이미지 삽입
-          quillObj.insertEmbed(range.index, "image", imgUrl)
+          // quillObj.insertEmbed(range.index, "image", imgUrl)
           setImageUrl(prevList => [...prevList, response.data])
+          setImageList(prevList => [...prevList, {
+            imageName: file.name,
+            s3Url: response.data
+          }])
             
         } catch(err){
           console.error('이미지 업로드 에러 발생', err)
+          alert('이미지가 업로드되지 않았습니다. 파일을 확인해주세요.')
         }
       }
+    }
+
+    const deleteImage = (s3Url : string)=>{
+      const confirm = window.confirm("이미지를 삭제하시겠습니까?")
+      if(!confirm){
+        return;
+      }
+      const cpList = [...imageList]
+      const newList = cpList.filter((item)=>item.s3Url !== s3Url)
+      setImageList(newList)
+      const cpUrl = [...imageUrl]
+      const newUrl = cpUrl.filter((item)=> item !== s3Url)
+      setImageUrl(newUrl)
     }
 
     const quillModule =useMemo(()=>{
@@ -100,6 +127,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         setReviewTag([])
         setContent("")
         setImageUrl([])
+        setImageList([])        
       }
     }
 
@@ -117,8 +145,8 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         Object.keys(reviewData.store).length !==0 &&
         reviewData.content !== ""
       ){
-
-        createReview(reviewData, accessToken)
+        setIsUpload(true)
+        createReview(reviewData, accessToken, setIsUpload)
       }
       else{
         alert("제목, 가게 선택, 내용은 필수항목입니다.")
@@ -285,12 +313,25 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
                     />
                 </div>
               </div>
+              <h4>첨부 파일</h4>
+              <div className='review-create-img-list'>
+                {imageList.map((item, idx)=>(
+                  <div className='review-create-img' key={idx}>
+                  <div>{item.imageName}</div>
+                  <FontAwesomeIcon icon={faX} className='img-delete-btn' onClick={()=>deleteImage(item.s3Url)} style={{cursor: 'pointer'}}/>
+                  </div>
+                ))}
+              </div>
               <div className='review-create-btn-box'>
                 <Button variant="primary" onClick={()=>clickCreateReview()}>리뷰 작성하기</Button>
                 <Button variant="primary" onClick={() => closeModal()}>취소</Button>
               </div>            
           </div>
         </Modal.Body>
+      {isUpload ? 
+        <div className='spinner-box'>
+          <div className='spinner-div'><Spinners/></div>
+        </div> : null}
       </Modal>
     </div>
   )

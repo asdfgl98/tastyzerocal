@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./ReviewDetail.css"
-import { useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { AllReviewData, CommentData, WriteComment } from '../../model/types'
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
@@ -12,6 +12,7 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppSelector } from '../../Store/hooks/hooks';
 import { deleteComment, deleteReview, getComments, writeCommentOnReview } from '../../utils/review-Utils';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 const ReviewDetail = () => {
@@ -68,6 +69,7 @@ const ReviewDetail = () => {
   return (
     <div className='review-detail-container'>
         <div className='review-detail-box'>
+        <Link to={'/review'}><FontAwesomeIcon icon={faArrowLeft} style={{position: "absolute", left: "15px", top: "15px", cursor: "pointer", color: "black"}}/></Link>
         {userId === data.createBy.id ? <FontAwesomeIcon onClick={()=>clickDeleteReview()} icon={faTrashCan} style={{position: "absolute", right: "15px", top: "15px", cursor: "pointer"}}/> : null}
             <div className='review-detail-title'>
                 <h4>{data.title}</h4>
@@ -100,7 +102,7 @@ const ReviewDetail = () => {
                 </Stack>
             </div>
             <div className='review-detail-img-box'>
-                <ImageSlide img={data.image}/>
+                {data.image.length !== 0 ? <ImageSlide img={data.image}/> : null}
             </div>
             <div 
                 className='review-detail-content'

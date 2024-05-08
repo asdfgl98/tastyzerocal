@@ -51,7 +51,7 @@ export const clickTag = (e:any ,item: string, reviewTag:string[], setReviewTag: 
 }
 
 /** 리뷰 생성 요청 함수 */
-export const createReview = async(reviewData: ReviewData, accessToken: string)=>{
+export const createReview = async(reviewData: ReviewData, accessToken: string, setIsUpload: any)=>{
   if(accessToken === ""){
     alert("로그인이 필요한 서비스 입니다.")
     return;
@@ -63,6 +63,7 @@ export const createReview = async(reviewData: ReviewData, accessToken: string)=>
       }
     })
     if(response.data){
+      setIsUpload(false)
       window.location.href = "/review"
     }
   } catch(err) {

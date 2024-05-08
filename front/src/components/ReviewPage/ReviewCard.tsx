@@ -57,7 +57,7 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
         <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" onClick={()=>clickReviewCard()} src={`https://${data.image[0]}`} style={{objectFit: "cover", cursor:"pointer"}} className="card-img"/>
         <Card.Body>        
-            <Card.Title>{data.title}</Card.Title>
+            <Card.Title onClick={()=>clickReviewCard()} style={{cursor: "pointer"}}>{data.title}</Card.Title>
             <Card.Text>{data.store.place_name}</Card.Text>
             <div className='like-view-box'>
               <div className='like-box'>

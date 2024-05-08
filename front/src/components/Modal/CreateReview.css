@@ -74,6 +74,44 @@
     width: 100%
 }
 
+.review-create-img-list {
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding-right: 10px;
+}
+
+.review-create-img {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* max-width: 430px; */
+    height: 40px;
+    margin: 10px;
+}
+
+.img-delete-btn {
+    margin-right: 15px;
+}
+
+.spinner-box{
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity : 0.5;
+    position: absolute;
+    z-index: 100;
+}
+
+.spinner-div {
+    position: absolute;
+    opacity : 1.0;
+    top: 85%;
+    left: 45%;
+}
+
 @media screen and (max-width: 430px){
     .review-create-map {
         display: flex;

@@ -42,6 +42,7 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
   }
 
   useEffect(()=>{
+    console.log(userId)
     if(data.likeCount.includes(userId)){
       setCheckLike(true)
     }

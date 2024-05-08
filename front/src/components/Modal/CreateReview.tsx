@@ -14,7 +14,7 @@ import { dbAxios } from '../../model/axios';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Spinners from '../Common/Spinners';
+import PacmanLoader from 'react-spinners/PacmanLoader'
 
 interface OwnProp {
     showModal : boolean
@@ -52,7 +52,7 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
       phone: ""
     })
     const [isUpload, setIsUpload] = useState<boolean>(false)
-    const quillRef = useRef<any>(null)  
+    const quillRef = useRef<any>(null)   
 
     /** 이미지 서버로 저장 */
     const imageHandler = async()=>{
@@ -330,7 +330,10 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         </Modal.Body>
       {isUpload ? 
         <div className='spinner-box'>
-          <div className='spinner-div'><Spinners/></div>
+          <div className='spinner-div'>
+            {/* <Spinners/> */}
+            <PacmanLoader loading={isUpload} color={'#E0475B'} size={'50'} speedMultiplier={1}/>
+          </div>
         </div> : null}
       </Modal>
     </div>

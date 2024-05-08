@@ -21,7 +21,7 @@ export class UsersController {
 
   /** 아이디 중복 검사 */
   @Get(':id')
-  @ApiOperation({summary: '아이디 중복 검사', description: '일반 회원가입 시 아이디 중복 검사를 합니다.'})
+  @ApiOperation({summary: '아이디 중복검사', description: '일반 회원가입 시 아이디 중복검사를 합니다.'})
   @ApiOkResponse({description: 'true | false'})
   async idDuplicateCheck(@Param('id') id: string){
     const checkId = await this.usersService.userCheck(id)

@@ -39,7 +39,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('tzc DB Server')
-    .setDescription('tzc DB Server API description')
+    .setDescription('tzc DB Server는 MongoDB Atlas와 통신하며 Data를 관리하는 API 입니다.')
     .setVersion('1.0')
     .addTag('tzc DB')
     .addBearerAuth({

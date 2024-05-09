@@ -23,7 +23,7 @@ async function bootstrap() {
   // swagger 문서 빌드를 위한 config
   const config = new DocumentBuilder()
     .setTitle('tzc API Server')
-    .setDescription('tzc API Server API description')
+    .setDescription('tzc API Server는 주로 Third-party API와 통신합니다.')
     .setVersion('1.0')
     .addTag('tzc API')
     .addBearerAuth({

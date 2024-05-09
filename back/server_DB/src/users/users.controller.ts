@@ -1,15 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UseFilters, Res, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { FavoriteDTO } from './dto/favorite-dto';
 import { BearerTokenGuard } from 'src/guard/bearer-token.guard';
 import { HttpExceptionFilter } from 'src/exception-filter/http.exception-filter';
 import { tokenDeleteToCookies } from 'src/Utils/JWT-Utils';
 import { Response } from 'express';
-import { CreateReviewDTO } from 'src/reviews/dto/create-review.dto';
-import { ReviewsService } from 'src/reviews/reviews.service';
-import { AwsService } from 'src/aws/aws.service';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
@@ -39,8 +35,8 @@ export class UsersController {
   @ApiResponse({status:401, description: 'Unauthorized'})
   @ApiBearerAuth()
   @UseGuards(BearerTokenGuard)
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDTO) {
+UpdateUserDTO
     return this.usersService.update(id, updateUserDto);
   }
 

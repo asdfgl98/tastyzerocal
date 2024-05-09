@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/schema/user.schema';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs'
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDTO } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -59,7 +59,7 @@ export class AuthService {
     }
 
     /** 회원가입  */
-    async Join(user: CreateUserDto){
+    async Join(user: CreateUserDTO){
         // hash 생성
         const hash = await bcrypt.hash(
             user.password,

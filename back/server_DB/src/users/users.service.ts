@@ -1,6 +1,6 @@
 import { BadRequestException, ForbiddenException, Inject, Injectable, NotFoundException, UnauthorizedException, forwardRef } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/user.schema';
 import { Model, Types } from 'mongoose';
@@ -26,7 +26,7 @@ export class UsersService {
 
 
   /** 회원 가입 Model */ 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDTO) {
     const idFind = await this.UserModel.findOne({
       id : createUserDto.id
     })
@@ -77,7 +77,7 @@ export class UsersService {
   }
 
   /**  회원 정보 수정 Model*/
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDTO) {
     const response = await this.UserModel.updateOne({
       id
     },{
@@ -135,7 +135,7 @@ export class UsersService {
   }
 
   /** 소셜 로그인 재 로그인 시 토큰 업데이트 */
-  async updateSocialToken(user: Pick<CreateUserDto, "id" | "token">){
+  async updateSocialToken(user: Pick<CreateUserDTO, "id" | "token">){
     const result = await this.UserModel.findOneAndUpdate({
     id:  user.id
     },{

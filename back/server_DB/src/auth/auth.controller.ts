@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Headers, Post, Req, Request, Res, UseFilters, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDTO } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import {  Response } from 'express';
 import { BasicTokenGuard } from 'src/guard/basic-token.guard';
@@ -26,19 +26,19 @@ export class AuthController {
   @ApiCreatedResponse({description: 'accessToken | refreshToken'})
   @ApiResponse({status:400, description: 'BadRequest'})
   async joinWithId
-  (@Body() createUserDto: CreateUserDto,
+  (@Body() createUserDto: CreateUserDTO,
   @Res() res: Response
   ){
     const result = await this.authService.Join(createUserDto)
     tokenCreateForCookies(res, 'refresh_token', result)    
   }
 
-  /** 소셜 회원가입 엔드포인트*/
+  /** 소셜 회원가입 및 로그인 엔드포인트*/
   @Post('social-join')
-  @ApiOperation({summary: '소셜 회원가입', description: '소셜 회원가입을 진행합니다.'})
+  @ApiOperation({summary: '소셜 회원가입 및 로그인', description: '소셜 회원가입 또는 로그인을 진행합니다.'})
   @ApiCreatedResponse({description: 'accessToken | refreshToken'})
   @ApiResponse({status:400, description: 'BadRequest'})
-  async joinWithSocial(@Body() createSocialDTO: CreateUserDto){
+  async joinWithSocial(@Body() createSocialDTO: CreateUserDTO){
     return await this.authService.Join(createSocialDTO)
   }
 

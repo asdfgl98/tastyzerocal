@@ -54,6 +54,7 @@ export const clickTag = (e:any ,item: string, reviewTag:string[], setReviewTag: 
 export const createReview = async(reviewData: ReviewData, accessToken: string, setIsUpload: any)=>{
   if(accessToken === ""){
     alert("로그인이 필요한 서비스 입니다.")
+    window.location.href = '/user'
     return;
   }
   try{
@@ -76,6 +77,7 @@ export const createReview = async(reviewData: ReviewData, accessToken: string, s
 export const deleteReview = async(postId: string, accessToken: string)=>{
   if(accessToken === ""){
     alert("로그인이 필요한 서비스 입니다.")
+    window.location.href = '/user'
     return;
   }
   try{
@@ -107,6 +109,7 @@ export const getComments = async(postId: string, setCommentData: any)=>{
 export const writeCommentOnReview = async(commentData: WriteComment, accessToken: string)=>{
   if(accessToken === ""){
     alert("로그인이 필요한 서비스 입니다.")
+    window.location.href = '/user'
     return false
   }
   if(commentData.comment === ""){

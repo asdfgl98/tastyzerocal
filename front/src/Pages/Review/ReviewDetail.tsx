@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./ReviewDetail.css"
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AllReviewData, CommentData, WriteComment } from '../../model/types'
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
@@ -17,6 +17,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const ReviewDetail = () => {
     const data:AllReviewData = useLocation().state
+    const navigator = useNavigate()
     const {_id} = useParams()
     const userId = useAppSelector((state)=>state.userData.id)
     const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
@@ -69,7 +70,7 @@ const ReviewDetail = () => {
   return (
     <div className='review-detail-container'>
         <div className='review-detail-box'>
-        <Link to={'/review'}><FontAwesomeIcon icon={faArrowLeft} style={{position: "absolute", left: "15px", top: "15px", cursor: "pointer", color: "black"}}/></Link>
+        <FontAwesomeIcon icon={faArrowLeft} onClick={()=>navigator(-1)} style={{position: "absolute", left: "15px", top: "15px", cursor: "pointer", color: "black"}}/>
         {userId === data.createBy.id ? <FontAwesomeIcon onClick={()=>clickDeleteReview()} icon={faTrashCan} style={{position: "absolute", right: "15px", top: "15px", cursor: "pointer"}}/> : null}
             <div className='review-detail-title'>
                 <h4>{data.title}</h4>

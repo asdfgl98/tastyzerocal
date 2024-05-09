@@ -39,6 +39,7 @@ export const getUserDataWithToken = async(dispatch:any ,accessToken:string)=>{
     const error = err.response?.data.error.error
     if(error === "RefreshExpired"){
       alert("엑세스가 만료되었습니다. 다시 로그인해주세요.")
+      window.location.href = '/user'
     }
     else if(error === "AccessExpired"){
       console.log("엑세스 토큰 만료")

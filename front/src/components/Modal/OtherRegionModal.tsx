@@ -23,7 +23,6 @@ const OtherRegionModal:React.FC<OwnProp> = ({regionData,  setORModal, ORModal}) 
     /** 검색 버튼 클릭 함수 */
     const searchBtn = ()=>{
         if(regionChoice !== undefined){
-            console.log(regionChoice, cityChoice)
             let data = `${regionChoice} ${cityChoice}`
             searchStore(data, dispatch)
             dispatch(changeKeyword(data))

@@ -60,6 +60,7 @@ const ReviewPage = () => {
     const clickCreateReview = ()=>{
         if(accessToken === ""){
             alert("로그인이 필요한 서비스입니다.")
+            window.location.href = '/user'
             return;
         }
         setShowModal(true)

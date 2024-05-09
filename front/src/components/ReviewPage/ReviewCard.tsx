@@ -35,6 +35,7 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
   const clickLikeIcon = async(postId: string)=>{
     if(accessToken === ""){
       alert("로그인이 필요한 서비스입니다.")
+      window.location.href = '/user'
       return;
     }
     const response = await likeCount(postId, accessToken, isMyPage)

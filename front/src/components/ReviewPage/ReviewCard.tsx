@@ -22,6 +22,7 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
   const navigater = useNavigate()
   const accessToken = useAppSelector((state)=>state.tokenData.accessToken)
   const userId = useAppSelector((state)=>state.userData.id)
+  const imgUrl = data.image.length !== 0 ? `https://${data.image[0]}` : './images/imgT.png'
   
   const clickReviewCard = async()=>{
     try{
@@ -56,7 +57,7 @@ const ReviewCard:React.FC<OwnProp> = ({data, setReviewData,isMyPage}) => {
   return (
     <div className='card-style' >
         <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" onClick={()=>clickReviewCard()} src={`https://${data.image[0]}`} style={{objectFit: "cover", cursor:"pointer"}} className="card-img"/>
+        <Card.Img variant="top" onClick={()=>clickReviewCard()} alt='음식 메인사진' src={imgUrl} style={{objectFit: "cover", cursor:"pointer", minHeight: '200px'}} className="card-img"/>
         <Card.Body>        
             <Card.Title onClick={()=>clickReviewCard()} style={{cursor: "pointer"}}>{data.title}</Card.Title>
             <Card.Text>{data.store.place_name}</Card.Text>

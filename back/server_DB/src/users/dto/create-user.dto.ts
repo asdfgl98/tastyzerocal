@@ -43,7 +43,7 @@ export class CreateUserDTO {
         message: "loginType은 string 타입을 입력해주어야 합니다."
     })
     @IsOptional()
-    @ApiPropertyOptional({ description: '로그인 타입',example:'normal'})
+    @ApiPropertyOptional({ description: '로그인 타입'})
     readonly loginType: string
     
     @IsOptional()

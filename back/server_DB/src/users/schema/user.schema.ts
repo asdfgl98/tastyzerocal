@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ObjectId } from "mongodb";
 import mongoose, { Types } from "mongoose";
 import { FavoriteDTO } from "../dto/favorite-dto";
 import { Favorite } from "./favorite.schema";
@@ -14,7 +13,8 @@ export class User {
     id: string;
 
     @Prop({
-        required: true
+        required: true,
+        unique: false
     })
     name: string;
 

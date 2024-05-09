@@ -73,17 +73,13 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
         const range = quillObj?.getSelection()!;
         try{
           const response = await dbAxios.post('/common/image', formData)
-          console.log(response)
           // 이미지 스태틱 서빙 URL
           const imgUrl = `${process.env.REACT_APP_DB_SERVER}/public-img/reviews/${response.data}`
-          // 에디터 커서에 서버에 저장된 이미지 삽입
-          // quillObj.insertEmbed(range.index, "image", imgUrl)
           setImageUrl(prevList => [...prevList, response.data])
           setImageList(prevList => [...prevList, {
             imageName: file.name,
             s3Url: response.data
           }])
-            
         } catch(err){
           console.error('이미지 업로드 에러 발생', err)
           alert('이미지가 업로드되지 않았습니다. 파일을 확인해주세요.')
@@ -132,8 +128,9 @@ const CreateReview:React.FC<OwnProp> = ({showModal, setShowModal}) => {
       }
     }
 
+
     /** 리뷰데이터 검증 및 리뷰생성 요청함수 실행 */
-    const clickCreateReview = ()=>{
+    const clickCreateReview = async()=>{
       const reviewData:ReviewData = {
         title: reviewTitle!,
         store: directInputCheck ?  directInputData : storeData,

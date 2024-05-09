@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs'
 import * as path from 'path'
-import { PUBLIC_FOLDER_PATH, REVIEWS_IMAGE_PATH } from 'src/common/const/path.const';
+import { REVIEWS_IMAGE_PATH } from 'src/common/const/path.const';
 
 @Injectable()
 export class AwsService {
@@ -21,6 +21,7 @@ export class AwsService {
     async imageUploadToS3(fileName: string[]){
         let imageList = []
         for(let i=0; i< fileName.length; i++){
+            
             const filePath = path.join(REVIEWS_IMAGE_PATH, fileName[i])
             const imageFile =  fs.readFileSync(filePath)
             const imageType = fileName[i].split(".")[1]
@@ -32,14 +33,24 @@ export class AwsService {
                 ContentType: `image/${imageType}`
             })
 
-            try{
-                const upload = await this.s3.send(command)
+            if(i===0){
+                try{
+                    await this.s3.send(command)
+                    imageList.push(`${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName[i]}`)
+    
+                } catch(err){
+                    console.log('imageUploadToS3 : s3 업로드 에러', err)
+                    throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+                }
+            } else {
+                this.s3.send(command)
+                    .catch((err)=>{
+                        console.log('imageUploadToS3 : s3 업로드 에러', err)
+                        throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+                    })
                 imageList.push(`${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName[i]}`)
-
-            } catch(err){
-                console.log('imageUploadToS3 : s3 업로드 에러', err)
-                throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
             }
+
         }
 
         return imageList

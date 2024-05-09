@@ -36,7 +36,7 @@ export class AuthController {
   /** 소셜 회원가입 및 로그인 엔드포인트*/
   @Post('social-join')
   @ApiOperation({summary: '소셜 회원가입 및 로그인', description: '소셜 회원가입 또는 로그인을 진행합니다.'})
-  @ApiCreatedResponse({description: 'accessToken | refreshToken'})
+  @ApiCreatedResponse({description: 'accessToken & refreshToken'})
   @ApiResponse({status:400, description: 'BadRequest'})
   async joinWithSocial(@Body() createSocialDTO: CreateUserDTO){
     return await this.authService.Join(createSocialDTO)
@@ -90,7 +90,7 @@ export class AuthController {
   /** 일반 로그인 엔드포인트 */
   @Post('login')
   @ApiOperation({summary: '일반 로그인', description: '일반 로그인을 진행합니다.'})
-  @ApiCreatedResponse({description: 'accessToken | refreshToken'})
+  @ApiCreatedResponse({description: 'accessToken & refreshToken'})
   @ApiResponse({status:400, description: 'BadRequest'})
   @ApiResponse({status:401, description: 'Unauthorized'})
   @ApiBasicAuth()

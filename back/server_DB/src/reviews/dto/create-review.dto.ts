@@ -20,7 +20,7 @@ export class CreateReviewDTO {
     tag: string[]
 
     @IsString()
-    @ApiProperty({example:'맛집 추천합니다.', description: '리뷰 코멘트'})
+    @ApiProperty({example:'맛집 추천합니다.', description: '리뷰 내용'})
     content: string
 
     @IsArray()

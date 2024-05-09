@@ -2,16 +2,14 @@
 
 맛있으면 0칼로리는 맛집 정보 제공 웹 서비스 입니다.
 
-사용자의 위치 / 지역 검색 / 식당 상호명 기반으로 Kakao API 에서 제공하는 음식점 정보 Kakao Map 을 통해 보여줍니다. 또한, 리뷰 게시판을 통해 사용자들 간의 맛집 정보 공유가 가능합니다.
+사용자의 위치 / 지역 검색 / 식당명 기반으로 Kakao API 에서 제공하는 음식점 정보 Kakao Map 을 통해 보여줍니다. 또한, 리뷰 게시판을 통해 사용자들 간의 맛집 정보 공유가 가능합니다.
 
-계속해서 진행중인 프로젝트로 모바일에서 사용할 수 있도록 반응형 작업을 진행중이며,
 
-주변 지인들이 사용할 수 있도록 하여 피드백을 통해 지속적으로 개선해나가고 있습니다.
-
-배포 URL : http://tastyzerocal.store/
+배포 URL : https://tastyzerocal.store/
 
 ## 프로젝트 아키텍처
-![image](https://github.com/asdfgl98/tastyzerocal/assets/83624652/b84d3d52-0476-4990-8ddf-d32c4d2787d4)
+![image](https://github.com/asdfgl98/tastyzerocal/assets/83624652/23af61ed-0848-41d4-8ae6-46bd05dafb85)
+
 
 </br>
 
@@ -21,7 +19,9 @@
 - NestJS로 API 요청을 담당하는 서버와 DataBase 요청을 담당하는 서버 구축
 - MongoDB Atals를 활용하여 클라우드 DataBase 서버 구축
 - AWS EC2에 Docker를 활용하여 Container 배포
+- HTTPS 환경 구성
 - Jenkins로 CI/CD 환경 구축 / Discord 플러그인 활용 jenkins 결과 전송
+- 리뷰 업로드 속도 약 67.5% 개선(2초 -> 0.65초)
   
 </br>
 
@@ -89,7 +89,162 @@
   
 </br>
 
-# ⚠️ 트러블 슈팅
+# ⚠️ 성능 개선 및 트러블 슈팅
+
+
+## 리뷰 업로드(이미지) 속도 개선 약 67.5%
+
+### 개선 전
+기존 방식은 리뷰 작성 중 이미지를 첨부하고 리뷰 작성하기 버튼을 클릭했을 때,
+
+ **한번에 리뷰 데이터와 이미지를 서버로 전송**하고 S3에 업로드 및 DB에 저장하는 방식으로 
+
+**3MB의 이미지를 총 3장** 업로드 할 때 **약 2초의 시간이 발생**하였습니다.
+<div style="display: flex; width: 100%;">
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/c52dcfac-70a0-4f02-b8aa-8158a7c8d6b7" style="width: 55%; height: 100%;"/>
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/e8269e02-8c68-4d50-abb6-fbc1353029f3" style="width: 35%; height: 100%;"/>
+</div>
+
+
+### 개선 방향 및 방법
+
+이미지 선 업로드 방식을 통해 이미지를 첨부함과 동시에 이미지를 서버로 전송하여 서버 내에서 보관하고 있다가 리뷰 작성하기 버튼을 클릭했을 때, 리뷰 데이터만 전송하고 S3 업로드 부분의 비동기 방식을 효율적인 방향으로 수정하였습니다.
+
+<br/>
+
+### 첫 번째 개선 후
+
+이미지 선 업로드 방식을 적용한 후, **약 1.35초의 시간이 발생**하여 기존 대비 **32.5%** 성능이 개선되었습니다. 
+
+여기서 만족하지 않고 개선점을 찾기 위해 리뷰 생성 Controller의 코드를 읽어보며 두 번째 개선방안을 찾았습니다.
+<div style="display: flex; width: 100%;">
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/8b8f9f23-2be4-48bf-bcdc-859f1abe2fc9" style="width: 55%; height: 100%;"/>
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/1b414b0a-7291-45d0-b7fc-e435caaa3da0" style="width: 35%; height: 100%;"/>
+
+</div>
+
+
+### 두 번째 개선 후
+
+S3 업로드 로직의 비동기 처리 코드를 수정하여 최종적으로 **동일한 3MB의 이미지를 총 3장** 업로드 할 때  **약 0.65초의 시간이 발생**하여 리뷰 업로드 속도가 **약 67.5%** 개선되었습니다.
+
+업로드 로직 변경 전에는 모든 이미지에 대한 업로드를 await하여 업로드가 완료 되면 return을 하였지만, 
+
+리뷰 카드에 썸네일로 사용되는 첫 번째 이미지가 업로드 될 때까지만 await 수정하여 조금 더 빠르게 return을 할 수 있도록 수정하였습니다.
+
+<details>
+<summary>변경 코드</summary>
+ 
+ ```
+// 변경 전
+ async imageUploadToS3(fileName: string[]){
+        let imageList = []
+        for(let i=0; i< fileName.length; i++){
+            
+            const filePath = path.join(REVIEWS_IMAGE_PATH, fileName[i])
+            const imageFile =  fs.readFileSync(filePath)
+            const imageType = fileName[i].split(".")[1]
+
+            const command = new PutObjectCommand({
+                Bucket: this.configService.get("AWS_BUCKET_NAME"),
+                Key: fileName[i],
+                Body: imageFile,
+                ContentType: `image/${imageType}`
+            })
+
+            try{
+                await this.s3.send(command) // 모든 업로드에 대해 await
+                imageList.push(`${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName[i]}`)
+
+            } catch(err){
+                console.log('imageUploadToS3 : s3 업로드 에러', err)
+                throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+            }
+        }
+
+        return imageList
+    }
+
+ ```
+
+```
+// 변경 후
+
+async imageUploadToS3(fileName: string[]){
+        let imageList = []
+        for(let i=0; i< fileName.length; i++){
+            
+            const filePath = path.join(REVIEWS_IMAGE_PATH, fileName[i])
+            const imageFile =  fs.readFileSync(filePath)
+            const imageType = fileName[i].split(".")[1]
+
+            const command = new PutObjectCommand({
+                Bucket: this.configService.get("AWS_BUCKET_NAME"),
+                Key: fileName[i],
+                Body: imageFile,
+                ContentType: `image/${imageType}`
+            })
+
+            if(i===0){ // 첫 번째 이미지만 await
+                try{
+                    await this.s3.send(command)
+                    imageList.push(`${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName[i]}`)
+    
+                } catch(err){
+                    console.log('imageUploadToS3 : s3 업로드 에러', err)
+                    throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+                }
+            } else { // 나머지 이미지는 대기하지 않고 비동기 방식으로 업로드 진행
+                this.s3.send(command)
+                    .catch((err)=>{
+                        console.log('imageUploadToS3 : s3 업로드 에러', err)
+                        throw new BadRequestException('imageUploadToS3 : s3 업로드 에러')
+                    })
+                imageList.push(`${this.configService.get("AWS_CLOUD_FRONT_DN")}/${fileName[i]}`)
+            }
+
+        }
+
+        return imageList
+    }
+
+```
+
+</details>
+<div style="display: flex; width: 100%;">
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/07e8de90-2ff1-44d4-8af7-f3cae8c7820a" style="width: 55%; height: 100%;"/>
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/fbad6840-2ebe-4b25-8b1d-0868c5a70e1f" style="width: 35%; height: 100%;"/>
+</div>
+
+
+## GIF로 비교
+ 
+ ### 개선 전
+ 로딩중 팩맨이 약 3~4개를 먹습니다.
+<img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/0c49ca52-0c9e-4401-b962-5839f298adf9" style="width: 50%; height: 50%;"/>
+
+
+ ### 첫 번째 개선 후
+ 로딩중 팩맨이 약 2개를 먹습니다.
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/2d386442-644f-4435-8a9c-27bad9822de7" style="width: 50%; height: 50%;"/>
+
+ ### 두 번째 개선 후
+ 로딩중 팩맨이 먹기전에 응답을 받습니다.
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/c0aae421-84ce-43a2-b587-8bde6a6e4184" style="width: 50%; height: 50%;"/>
+
+ ### 배포 환경에서 확인
+ 배포 환경(AWS EC2 인스턴스)에서도 잘 작동하는 것을 확인하였습니다.
+ <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/64b328b4-bf65-40f7-a132-a7ec86d18ebe" style="width: 50%; height: 50%;"/>
+
+### 배운점
+
+무분별하게 비동기 처리를 위한 async / await을 사용하는 것이 아닌, 실제로 대기가 필요한 로직인지 한번 더 고민 해본 후 await을 사용하여 시간을 절약하교 효율성을 높일 수 있었습니다.
+
+또한, 실제로 2초에서 0.65초로 속도가 개선되어 저 스스로도 더 편하다고 느껴 사용자 경험(UX)의 중요성과 서비스의 지속적인 사용과 피드백으로 개선점을 찾아나가는 것에 대한 중요성을 배웠습니다.
+
+<br/>
+
+## 개발 환경과 배포 환경에서의 트러블슈팅
 
 ### 문제 배경
 
@@ -120,6 +275,8 @@ Nginx에 대해 잘 모르는 상황이었지만 React의 장점인 Single Page 
 ### 오류 해결 포스팅
 
 ### https://blog.naver.com/devnote-/223425805279
+
+
 
 
 </br>

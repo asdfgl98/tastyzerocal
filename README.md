@@ -116,7 +116,7 @@
 
 이미지 선 업로드 방식을 적용한 후, **약 1.35초의 시간이 발생**하여 기존 대비 **32.5%** 성능이 개선되었습니다. 
 
-여기서 만족하지 않고 개선점을 찾기 위해 리뷰 생성 Controller의 코드를 읽어보며 두 번째 개선방안을 찾았습니다.
+여기서 만족하지 않고 개선점을 찾기 위해 리뷰 생성 로직의 코드를 읽어보며 두 번째 개선방안을 찾았습니다.
 <div style="display: flex; width: 100%;">
  <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/8b8f9f23-2be4-48bf-bcdc-859f1abe2fc9" style="width: 55%; height: 100%;"/>
  <img src="https://github.com/asdfgl98/tastyzerocal/assets/83624652/1b414b0a-7291-45d0-b7fc-e435caaa3da0" style="width: 35%; height: 100%;"/>
